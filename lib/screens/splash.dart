@@ -31,7 +31,7 @@ class SplashScreen extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'WEBアプリ',
+                        'WEB申込フォーム(取材)',
                         style: TextStyle(
                           color: kBlackColor,
                           fontSize: 18,
