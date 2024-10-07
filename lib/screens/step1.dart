@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:miel_work_request_interview_web/common/functions.dart';
 import 'package:miel_work_request_interview_web/common/style.dart';
+import 'package:miel_work_request_interview_web/providers/request_interview.dart';
 import 'package:miel_work_request_interview_web/widgets/animation_background.dart';
 import 'package:miel_work_request_interview_web/widgets/custom_button.dart';
 import 'package:miel_work_request_interview_web/widgets/custom_text_field.dart';
 import 'package:miel_work_request_interview_web/widgets/form_label.dart';
 import 'package:miel_work_request_interview_web/widgets/responsive_box.dart';
+import 'package:provider/provider.dart';
 
 class Step1Screen extends StatefulWidget {
   const Step1Screen({super.key});
@@ -16,6 +19,7 @@ class Step1Screen extends StatefulWidget {
 class _Step1ScreenState extends State<Step1Screen> {
   @override
   Widget build(BuildContext context) {
+    final interviewProvider = Provider.of<RequestInterviewProvider>(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -293,7 +297,16 @@ class _Step1ScreenState extends State<Step1Screen> {
                         label: '入力内容を確認',
                         labelColor: kWhiteColor,
                         backgroundColor: kBlueColor,
-                        onPressed: () {},
+                        onPressed: () async {
+                          String? error = await interviewProvider.create();
+                          if (error != null) {
+                            if (!mounted) return;
+                            showMessage(context, error, false);
+                            return;
+                          }
+                          if (!mounted) return;
+                          showMessage(context, '申込が完了しました', true);
+                        },
                       ),
                       const SizedBox(height: 24),
                     ],

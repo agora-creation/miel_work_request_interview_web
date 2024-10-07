@@ -3,7 +3,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:miel_work_request_interview_web/common/style.dart';
+import 'package:miel_work_request_interview_web/providers/request_interview.dart';
 import 'package:miel_work_request_interview_web/screens/step1.dart';
+import 'package:provider/provider.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,18 +35,23 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider.value(value: RequestInterviewProvider()),
       ],
-      supportedLocales: const [Locale('ja')],
-      locale: const Locale('ja'),
-      title: 'ひろめWORK - WEB申込フォーム(取材)',
-      theme: customTheme(),
-      home: const Step1Screen(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: const [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [Locale('ja')],
+        locale: const Locale('ja'),
+        title: 'ひろめWORK - WEB申込フォーム(取材)',
+        theme: customTheme(),
+        home: const Step1Screen(),
+      ),
     );
   }
 }
