@@ -3,20 +3,20 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:miel_work_request_interview_web/common/style.dart';
-import 'package:miel_work_request_interview_web/screens/splash.dart';
-import 'package:provider/provider.dart';
+import 'package:miel_work_request_interview_web/screens/step1.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: const FirebaseOptions(
-        apiKey: "AIzaSyCPYXWqVx6QGgofsI2XUqMq-8V4H0hjtrg",
-        authDomain: "miel-work-project.firebaseapp.com",
-        projectId: "miel-work-project",
-        storageBucket: "miel-work-project.appspot.com",
-        messagingSenderId: "66212259980",
-        appId: "1:66212259980:web:9176778d21b0b4983933a9",
-        measurementId: "G-6Y803HEGCL"),
+      apiKey: "AIzaSyCPYXWqVx6QGgofsI2XUqMq-8V4H0hjtrg",
+      authDomain: "miel-work-project.firebaseapp.com",
+      projectId: "miel-work-project",
+      storageBucket: "miel-work-project.appspot.com",
+      messagingSenderId: "66212259980",
+      appId: "1:66212259980:web:9176778d21b0b4983933a9",
+      measurementId: "G-6Y803HEGCL",
+    ),
   );
   await FirebaseAuth.instance.setPersistence(Persistence.LOCAL);
   if (FirebaseAuth.instance.currentUser == null) {
@@ -33,30 +33,18 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        localizationsDelegates: const [
-          GlobalMaterialLocalizations.delegate,
-          GlobalWidgetsLocalizations.delegate,
-          GlobalCupertinoLocalizations.delegate,
-        ],
-        supportedLocales: const [Locale('ja')],
-        locale: const Locale('ja'),
-        title: 'ひろめWORK - WEB申込フォーム(取材)',
-        theme: customTheme(),
-        home: const SplashController(),
-      ),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [Locale('ja')],
+      locale: const Locale('ja'),
+      title: 'ひろめWORK - WEB申込フォーム(取材)',
+      theme: customTheme(),
+      home: const Step1Screen(),
     );
-  }
-}
-
-class SplashController extends StatelessWidget {
-  const SplashController({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SplashScreen();
   }
 }
