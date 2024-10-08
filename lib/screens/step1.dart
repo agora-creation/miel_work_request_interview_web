@@ -35,6 +35,8 @@ class _Step1ScreenState extends State<Step1Screen> {
               const SizedBox(height: 24),
               ResponsiveBox(
                 children: [
+                  const Text('以下のフォームにご入力いただき、申込を行なってください。'),
+                  const SizedBox(height: 8),
                   FormLabel(
                     '会社名',
                     child: CustomTextField(
@@ -64,6 +66,13 @@ class _Step1ScreenState extends State<Step1Screen> {
                       hintText: '例）tanaka@hirome.co.jp',
                     ),
                   ),
+                  const Text(
+                    '※このメールアドレス宛に申込確認メールをお送りいたします',
+                    style: TextStyle(
+                      color: kRedColor,
+                      fontSize: 14,
+                    ),
+                  ),
                   const SizedBox(height: 8),
                   FormLabel(
                     '担当者電話番号',
@@ -91,7 +100,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                       controller: TextEditingController(),
                       textInputType: TextInputType.text,
                       maxLines: 1,
-                      hintText: '例）ひろめ市場へ行こう！',
+                      hintText: '例）ABC放送『ひろめ市場へ行こう！』',
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -157,6 +166,16 @@ class _Step1ScreenState extends State<Step1Screen> {
                   ),
                   const SizedBox(height: 8),
                   FormLabel(
+                    '担当者電話番号',
+                    child: CustomTextField(
+                      controller: TextEditingController(),
+                      textInputType: TextInputType.text,
+                      maxLines: 1,
+                      hintText: '例）090-0000-0000',
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  FormLabel(
                     '取材時間',
                     child: CustomTextField(
                       controller: TextEditingController(),
@@ -167,7 +186,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   ),
                   const SizedBox(height: 8),
                   FormLabel(
-                    '席予約',
+                    '席の予約',
                     child: Container(
                       decoration: const BoxDecoration(
                         border: Border(
@@ -238,12 +257,22 @@ class _Step1ScreenState extends State<Step1Screen> {
                   ),
                   const SizedBox(height: 8),
                   FormLabel(
-                    '担当者',
+                    '担当者名',
                     child: CustomTextField(
                       controller: TextEditingController(),
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText: '例）田中太郎',
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  FormLabel(
+                    '担当者電話番号',
+                    child: CustomTextField(
+                      controller: TextEditingController(),
+                      textInputType: TextInputType.text,
+                      maxLines: 1,
+                      hintText: '例）090-0000-0000',
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -289,12 +318,22 @@ class _Step1ScreenState extends State<Step1Screen> {
                   ),
                   const SizedBox(height: 8),
                   FormLabel(
-                    '担当者',
+                    '担当者名',
                     child: CustomTextField(
                       controller: TextEditingController(),
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText: '例）山田太郎',
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  FormLabel(
+                    '担当者電話番号',
+                    child: CustomTextField(
+                      controller: TextEditingController(),
+                      textInputType: TextInputType.text,
+                      maxLines: 1,
+                      hintText: '例）090-0000-0000',
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -309,7 +348,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   ),
                   const SizedBox(height: 8),
                   FormLabel(
-                    '席予約',
+                    '席の予約',
                     child: Container(
                       decoration: const BoxDecoration(
                         border: Border(
