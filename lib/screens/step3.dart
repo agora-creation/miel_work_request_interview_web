@@ -21,7 +21,7 @@ class _Step3ScreenState extends State<Step3Screen> {
           children: [
             const SizedBox(height: 24),
             const Text(
-              'WEB申込フォーム(取材)',
+              '取材申込フォーム',
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,

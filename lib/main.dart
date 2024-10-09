@@ -48,7 +48,7 @@ class MyApp extends StatelessWidget {
         ],
         supportedLocales: const [Locale('ja')],
         locale: const Locale('ja'),
-        title: 'ひろめWORK - WEB申込フォーム(取材)',
+        title: 'ひろめWORK - 取材申込フォーム',
         theme: customTheme(),
         home: const Step1Screen(),
       ),
