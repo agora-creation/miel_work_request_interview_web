@@ -14,12 +14,6 @@ class Step3Screen extends StatefulWidget {
 
 class _Step3ScreenState extends State<Step3Screen> {
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(

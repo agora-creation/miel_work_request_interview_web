@@ -16,6 +16,38 @@ class Step1Screen extends StatefulWidget {
 }
 
 class _Step1ScreenState extends State<Step1Screen> {
+  TextEditingController companyName = TextEditingController();
+  TextEditingController companyUserName = TextEditingController();
+  TextEditingController companyUserEmail = TextEditingController();
+  TextEditingController companyUserTel = TextEditingController();
+  TextEditingController mediaName = TextEditingController();
+  TextEditingController programName = TextEditingController();
+  TextEditingController castInfo = TextEditingController();
+  TextEditingController featureContent = TextEditingController();
+  TextEditingController publishedAt = TextEditingController();
+  TextEditingController interviewedAt = TextEditingController();
+  TextEditingController interviewedUserName = TextEditingController();
+  TextEditingController interviewedUserTel = TextEditingController();
+  TextEditingController interviewedTime = TextEditingController();
+  bool interviewedReserved = false;
+  TextEditingController interviewedShopName = TextEditingController();
+  TextEditingController interviewedVisitors = TextEditingController();
+  TextEditingController interviewedContent = TextEditingController();
+  TextEditingController locationAt = TextEditingController();
+  TextEditingController locationUserName = TextEditingController();
+  TextEditingController locationUserTel = TextEditingController();
+  TextEditingController locationVisitors = TextEditingController();
+  TextEditingController locationContent = TextEditingController();
+  TextEditingController insertedAt = TextEditingController();
+  TextEditingController insertedUserName = TextEditingController();
+  TextEditingController insertedUserTel = TextEditingController();
+  TextEditingController insertedTime = TextEditingController();
+  bool insertedReserved = false;
+  TextEditingController insertedShopName = TextEditingController();
+  TextEditingController insertedVisitors = TextEditingController();
+  TextEditingController insertedContent = TextEditingController();
+  TextEditingController remarks = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +72,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '会社名',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: companyName,
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText: '例）ひろめカンパニー',
@@ -50,7 +82,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '担当者名',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: companyUserName,
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText: '例）田中太郎',
@@ -60,7 +92,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '担当者メールアドレス',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: companyUserEmail,
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText: '例）tanaka@hirome.co.jp',
@@ -77,7 +109,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '担当者電話番号',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: companyUserTel,
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText: '例）090-0000-0000',
@@ -87,7 +119,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '媒体名',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: mediaName,
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText: '例）TV放送・WEB配信',
@@ -97,7 +129,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '番組・雑誌名',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: programName,
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText: '例）ABC放送『ひろめ市場へ行こう！』',
@@ -107,7 +139,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '出演者情報',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: castInfo,
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText: '例）ひろめ太郎、ひろめ花子',
@@ -117,7 +149,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '特集内容・備考',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: featureContent,
                       textInputType: TextInputType.multiline,
                       maxLines: null,
                       hintText: '例）賑わうひろめ市場の様子と高知の名物料理特集',
@@ -127,7 +159,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     'OA・掲載予定日',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: publishedAt,
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText: '例）令和元年11月1日10時から放送予定',
@@ -148,7 +180,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '予定日時',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: interviewedAt,
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText: '例）令和元年9月30日14:00〜16:00',
@@ -158,7 +190,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '担当者名',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: interviewedUserName,
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText: '例）山田二郎',
@@ -168,7 +200,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '担当者電話番号',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: interviewedUserTel,
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText: '例）090-0000-0000',
@@ -178,7 +210,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '取材時間',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: interviewedTime,
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText: '例）2時間程度',
@@ -196,8 +228,12 @@ class _Step1ScreenState extends State<Step1Screen> {
                       ),
                       child: CheckboxListTile(
                         title: const Text('必要な場合はチェックを入れてください'),
-                        value: false,
-                        onChanged: (value) {},
+                        value: interviewedReserved,
+                        onChanged: (value) {
+                          setState(() {
+                            interviewedReserved = value ?? false;
+                          });
+                        },
                         controlAffinity: ListTileControlAffinity.leading,
                       ),
                     ),
@@ -206,7 +242,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '取材店舗',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: interviewedShopName,
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText: '例）明神丸、黒潮物産',
@@ -216,7 +252,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '訪問人数',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: interviewedVisitors,
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText:
@@ -227,7 +263,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '取材内容・備考',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: interviewedContent,
                       textInputType: TextInputType.multiline,
                       maxLines: null,
                       hintText:
@@ -249,7 +285,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '予定日時',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: locationAt,
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText: '例）令和元年9月20日14:00〜15:00',
@@ -259,7 +295,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '担当者名',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: locationUserName,
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText: '例）田中太郎',
@@ -269,7 +305,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '担当者電話番号',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: locationUserTel,
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText: '例）090-0000-0000',
@@ -279,7 +315,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '訪問人数',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: locationVisitors,
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText: '例）2名',
@@ -289,7 +325,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     'ロケハン内容・備考',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: locationContent,
                       textInputType: TextInputType.multiline,
                       maxLines: null,
                       hintText: '例）9/17(火)〜9/20(金)のいずれかの日程で14:00〜15:00',
@@ -310,7 +346,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '予定日時',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: insertedAt,
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText: '例）令和元年10月1日14:00〜15:00',
@@ -320,7 +356,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '担当者名',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: insertedUserName,
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText: '例）山田太郎',
@@ -330,7 +366,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '担当者電話番号',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: insertedUserTel,
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText: '例）090-0000-0000',
@@ -340,7 +376,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '撮影時間',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: insertedTime,
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText: '例）1時間程度',
@@ -358,8 +394,12 @@ class _Step1ScreenState extends State<Step1Screen> {
                       ),
                       child: CheckboxListTile(
                         title: const Text('必要な場合はチェックを入れてください'),
-                        value: false,
-                        onChanged: (value) {},
+                        value: insertedReserved,
+                        onChanged: (value) {
+                          setState(() {
+                            insertedReserved = value ?? false;
+                          });
+                        },
                         controlAffinity: ListTileControlAffinity.leading,
                       ),
                     ),
@@ -368,7 +408,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '取材店舗',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: insertedShopName,
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText: '例）明神丸、黒潮物産',
@@ -378,7 +418,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '訪問人数',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: insertedVisitors,
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText: '例）3名',
@@ -388,7 +428,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '撮影内容・備考',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: insertedContent,
                       textInputType: TextInputType.multiline,
                       maxLines: null,
                       hintText: '例）ひろめ市場の内観・外観、カツオのたたきを焼いている映像',
@@ -400,7 +440,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     'その他連絡事項',
                     child: CustomTextField(
-                      controller: TextEditingController(),
+                      controller: remarks,
                       textInputType: TextInputType.multiline,
                       maxLines: null,
                     ),
@@ -418,7 +458,39 @@ class _Step1ScreenState extends State<Step1Screen> {
                         context,
                         PageTransition(
                           type: PageTransitionType.rightToLeft,
-                          child: Step2Screen(),
+                          child: Step2Screen(
+                            companyName: companyName.text,
+                            companyUserName: companyUserName.text,
+                            companyUserEmail: companyUserEmail.text,
+                            companyUserTel: companyUserTel.text,
+                            mediaName: mediaName.text,
+                            programName: programName.text,
+                            castInfo: castInfo.text,
+                            featureContent: featureContent.text,
+                            publishedAt: publishedAt.text,
+                            interviewedAt: interviewedAt.text,
+                            interviewedUserName: interviewedUserName.text,
+                            interviewedUserTel: interviewedUserTel.text,
+                            interviewedTime: interviewedTime.text,
+                            interviewedReserved: interviewedReserved,
+                            interviewedShopName: interviewedShopName.text,
+                            interviewedVisitors: interviewedVisitors.text,
+                            interviewedContent: interviewedContent.text,
+                            locationAt: locationAt.text,
+                            locationUserName: locationUserName.text,
+                            locationUserTel: locationUserTel.text,
+                            locationVisitors: locationVisitors.text,
+                            locationContent: locationContent.text,
+                            insertedAt: insertedAt.text,
+                            insertedUserName: insertedUserName.text,
+                            insertedUserTel: insertedUserTel.text,
+                            insertedTime: insertedTime.text,
+                            insertedReserved: insertedReserved,
+                            insertedShopName: insertedShopName.text,
+                            insertedVisitors: insertedVisitors.text,
+                            insertedContent: insertedContent.text,
+                            remarks: remarks.text,
+                          ),
                         ),
                       );
                     },
