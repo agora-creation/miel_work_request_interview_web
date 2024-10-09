@@ -39,7 +39,10 @@ class RequestInterviewProvider with ChangeNotifier {
     required String remarks,
   }) async {
     String? error;
+    if (companyName == '') return '会社名は必須入力です';
+    if (companyUserName == '') return '担当者名は必須入力です';
     if (companyUserEmail == '') return '担当者メールアドレスは必須入力です';
+    if (companyUserTel == '') return '担当者電話番号は必須入力です';
     try {
       await FirebaseAuth.instance.signInAnonymously().then((value) {
         String id = _interviewService.id();
