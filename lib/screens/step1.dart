@@ -99,7 +99,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                     ),
                   ),
                   const Text(
-                    '※このメールアドレス宛に申込確認メールをお送りいたします',
+                    '※このメールアドレス宛に、返答させていただきます',
                     style: TextStyle(
                       color: kRedColor,
                       fontSize: 14,

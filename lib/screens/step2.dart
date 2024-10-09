@@ -121,13 +121,6 @@ class _Step2ScreenState extends State<Step2Screen> {
                     '担当者メールアドレス',
                     child: FormValue(widget.companyUserEmail),
                   ),
-                  const Text(
-                    '※このメールアドレス宛に申込確認メールをお送りいたします',
-                    style: TextStyle(
-                      color: kRedColor,
-                      fontSize: 14,
-                    ),
-                  ),
                   const SizedBox(height: 8),
                   FormLabel(
                     '担当者電話番号',

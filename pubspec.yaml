@@ -24,6 +24,7 @@ dependencies:
   page_transition: ^2.1.0
   modal_bottom_sheet: ^3.0.0
   alert_banner: ^1.0.1
+  http: ^1.2.1
   flutter_spinkit: ^5.2.1
   file_picker: ^8.0.5
   file_selector: ^1.0.3
@@ -32,7 +33,6 @@ dependencies:
   board_datetime_picker: ^1.6.8
   calendar_date_picker2: ^1.1.5
   month_picker_dialog: ^4.0.0
-  http: ^1.2.2
 
   firebase_core: ^3.1.0
   firebase_auth: ^5.1.0

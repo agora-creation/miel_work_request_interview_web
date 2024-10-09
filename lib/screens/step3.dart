@@ -32,11 +32,7 @@ class _Step3ScreenState extends State<Step3Screen> {
             ResponsiveBox(
               children: [
                 const Text('申込ありがとうございました。'),
-                const Text(
-                  'ご入力いただいたメールアドレス宛に、自動返信メールをお送りしているので、お控えお願いします。',
-                ),
-                const SizedBox(height: 16),
-                const Text('申込内容を確認させていただき、返信いたしますので今しばらくお待ちください。'),
+                const Text('申込内容を確認させていただき、返信いたしますので、よろしくお願いいたします。'),
                 const SizedBox(height: 16),
                 const Text('このページはそのまま閉じても構いません。'),
                 const SizedBox(height: 24),
