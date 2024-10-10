@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:miel_work_request_interview_web/common/custom_date_time_picker.dart';
 import 'package:miel_work_request_interview_web/common/style.dart';
 import 'package:miel_work_request_interview_web/screens/step2.dart';
 import 'package:miel_work_request_interview_web/widgets/custom_button.dart';
+import 'package:miel_work_request_interview_web/widgets/custom_checkbox.dart';
 import 'package:miel_work_request_interview_web/widgets/custom_text_field.dart';
+import 'package:miel_work_request_interview_web/widgets/datetime_range_form.dart';
 import 'package:miel_work_request_interview_web/widgets/dotted_divider.dart';
 import 'package:miel_work_request_interview_web/widgets/form_label.dart';
 import 'package:miel_work_request_interview_web/widgets/responsive_box.dart';
@@ -59,7 +62,7 @@ class _Step1ScreenState extends State<Step1Screen> {
               const Text(
                 '取材申込フォーム',
                 style: TextStyle(
-                  fontSize: 20,
+                  fontSize: 24,
                   fontWeight: FontWeight.bold,
                   fontFamily: 'SourceHanSansJP-Bold',
                 ),
@@ -68,9 +71,20 @@ class _Step1ScreenState extends State<Step1Screen> {
               ResponsiveBox(
                 children: [
                   const Text('以下のフォームにご入力いただき、申込を行なってください。'),
+                  const SizedBox(height: 16),
+                  const DottedDivider(),
+                  const SizedBox(height: 16),
+                  const Text(
+                    '申込者情報',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'SourceHanSansJP-Bold',
+                    ),
+                  ),
                   const SizedBox(height: 8),
                   FormLabel(
-                    '会社名',
+                    '申込会社名',
                     child: CustomTextField(
                       controller: companyName,
                       textInputType: TextInputType.text,
@@ -80,7 +94,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   ),
                   const SizedBox(height: 8),
                   FormLabel(
-                    '担当者名',
+                    '申込担当者名',
                     child: CustomTextField(
                       controller: companyUserName,
                       textInputType: TextInputType.text,
@@ -90,7 +104,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   ),
                   const SizedBox(height: 8),
                   FormLabel(
-                    '担当者メールアドレス',
+                    '申込担当者メールアドレス',
                     child: CustomTextField(
                       controller: companyUserEmail,
                       textInputType: TextInputType.text,
@@ -107,7 +121,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   ),
                   const SizedBox(height: 8),
                   FormLabel(
-                    '担当者電話番号',
+                    '申込担当者電話番号',
                     child: CustomTextField(
                       controller: companyUserTel,
                       textInputType: TextInputType.text,
@@ -171,24 +185,45 @@ class _Step1ScreenState extends State<Step1Screen> {
                   const Text(
                     '取材当日情報',
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'SourceHanSansJP-Bold',
                     ),
                   ),
                   const SizedBox(height: 8),
                   FormLabel(
-                    '予定日時',
-                    child: CustomTextField(
-                      controller: interviewedAt,
-                      textInputType: TextInputType.text,
-                      maxLines: 1,
-                      hintText: '例）令和元年9月30日14:00〜16:00',
+                    '取材予定日時',
+                    child: DatetimeRangeForm(
+                      startedAt: DateTime.now(),
+                      startedOnTap: () async =>
+                          await CustomDateTimePicker().picker(
+                        context: context,
+                        init: DateTime.now(),
+                        title: '取材予定開始日時を選択',
+                        onChanged: (value) {
+                          // setState(() {
+                          //   startedAt = value;
+                          //   endedAt = startedAt.add(const Duration(hours: 1));
+                          // });
+                        },
+                      ),
+                      endedAt: DateTime.now(),
+                      endedOnTap: () async =>
+                          await CustomDateTimePicker().picker(
+                        context: context,
+                        init: DateTime.now(),
+                        title: '取材予定終了日時を選択',
+                        onChanged: (value) {
+                          // setState(() {
+                          //   endedAt = value;
+                          // });
+                        },
+                      ),
                     ),
                   ),
                   const SizedBox(height: 8),
                   FormLabel(
-                    '担当者名',
+                    '取材担当者名',
                     child: CustomTextField(
                       controller: interviewedUserName,
                       textInputType: TextInputType.text,
@@ -198,7 +233,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   ),
                   const SizedBox(height: 8),
                   FormLabel(
-                    '担当者電話番号',
+                    '取材担当者電話番号',
                     child: CustomTextField(
                       controller: interviewedUserTel,
                       textInputType: TextInputType.text,
@@ -208,34 +243,16 @@ class _Step1ScreenState extends State<Step1Screen> {
                   ),
                   const SizedBox(height: 8),
                   FormLabel(
-                    '取材時間',
-                    child: CustomTextField(
-                      controller: interviewedTime,
-                      textInputType: TextInputType.text,
-                      maxLines: 1,
-                      hintText: '例）2時間程度',
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  FormLabel(
                     '席の予約',
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          top: BorderSide(color: kDisabledColor),
-                          bottom: BorderSide(color: kDisabledColor),
-                        ),
-                      ),
-                      child: CheckboxListTile(
-                        title: const Text('必要な場合はチェックを入れてください'),
-                        value: interviewedReserved,
-                        onChanged: (value) {
-                          setState(() {
-                            interviewedReserved = value ?? false;
-                          });
-                        },
-                        controlAffinity: ListTileControlAffinity.leading,
-                      ),
+                    child: CustomCheckbox(
+                      label: '必要な場合はチェックを入れてください',
+                      value: interviewedReserved,
+                      onChanged: (value) {
+                        setState(() {
+                          interviewedReserved = value ?? false;
+                        });
+                      },
+                      borderView: true,
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -250,7 +267,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   ),
                   const SizedBox(height: 8),
                   FormLabel(
-                    '訪問人数',
+                    'いらっしゃる人数',
                     child: CustomTextField(
                       controller: interviewedVisitors,
                       textInputType: TextInputType.text,
@@ -273,27 +290,54 @@ class _Step1ScreenState extends State<Step1Screen> {
                   const SizedBox(height: 24),
                   const DottedDivider(),
                   const SizedBox(height: 16),
+                  CustomCheckbox(
+                    label: 'ロケハンをする場合はチェックを入れてください',
+                    value: false,
+                    onChanged: (value) {},
+                  ),
+                  const SizedBox(height: 8),
                   const Text(
                     'ロケハン情報',
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'SourceHanSansJP-Bold',
                     ),
                   ),
                   const SizedBox(height: 8),
                   FormLabel(
-                    '予定日時',
-                    child: CustomTextField(
-                      controller: locationAt,
-                      textInputType: TextInputType.text,
-                      maxLines: 1,
-                      hintText: '例）令和元年9月20日14:00〜15:00',
+                    'ロケハン予定日時',
+                    child: DatetimeRangeForm(
+                      startedAt: DateTime.now(),
+                      startedOnTap: () async =>
+                          await CustomDateTimePicker().picker(
+                        context: context,
+                        init: DateTime.now(),
+                        title: 'ロケハン予定開始日時を選択',
+                        onChanged: (value) {
+                          // setState(() {
+                          //   startedAt = value;
+                          //   endedAt = startedAt.add(const Duration(hours: 1));
+                          // });
+                        },
+                      ),
+                      endedAt: DateTime.now(),
+                      endedOnTap: () async =>
+                          await CustomDateTimePicker().picker(
+                        context: context,
+                        init: DateTime.now(),
+                        title: 'ロケハン予定終了日時を選択',
+                        onChanged: (value) {
+                          // setState(() {
+                          //   endedAt = value;
+                          // });
+                        },
+                      ),
                     ),
                   ),
                   const SizedBox(height: 8),
                   FormLabel(
-                    '担当者名',
+                    'ロケハン担当者名',
                     child: CustomTextField(
                       controller: locationUserName,
                       textInputType: TextInputType.text,
@@ -303,7 +347,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   ),
                   const SizedBox(height: 8),
                   FormLabel(
-                    '担当者電話番号',
+                    'ロケハン担当者電話番号',
                     child: CustomTextField(
                       controller: locationUserTel,
                       textInputType: TextInputType.text,
@@ -313,7 +357,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   ),
                   const SizedBox(height: 8),
                   FormLabel(
-                    '訪問人数',
+                    'いらっしゃる人数',
                     child: CustomTextField(
                       controller: locationVisitors,
                       textInputType: TextInputType.text,
@@ -334,27 +378,54 @@ class _Step1ScreenState extends State<Step1Screen> {
                   const SizedBox(height: 24),
                   const DottedDivider(),
                   const SizedBox(height: 16),
+                  CustomCheckbox(
+                    label: 'インサート撮影をする場合はチェックを入れてください',
+                    value: false,
+                    onChanged: (value) {},
+                  ),
+                  const SizedBox(height: 8),
                   const Text(
                     'インサート撮影情報',
                     style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 20,
                       fontWeight: FontWeight.bold,
                       fontFamily: 'SourceHanSansJP-Bold',
                     ),
                   ),
                   const SizedBox(height: 8),
                   FormLabel(
-                    '予定日時',
-                    child: CustomTextField(
-                      controller: insertedAt,
-                      textInputType: TextInputType.text,
-                      maxLines: 1,
-                      hintText: '例）令和元年10月1日14:00〜15:00',
+                    '撮影予定日時',
+                    child: DatetimeRangeForm(
+                      startedAt: DateTime.now(),
+                      startedOnTap: () async =>
+                          await CustomDateTimePicker().picker(
+                        context: context,
+                        init: DateTime.now(),
+                        title: '撮影予定開始日時を選択',
+                        onChanged: (value) {
+                          // setState(() {
+                          //   startedAt = value;
+                          //   endedAt = startedAt.add(const Duration(hours: 1));
+                          // });
+                        },
+                      ),
+                      endedAt: DateTime.now(),
+                      endedOnTap: () async =>
+                          await CustomDateTimePicker().picker(
+                        context: context,
+                        init: DateTime.now(),
+                        title: '撮影予定終了日時を選択',
+                        onChanged: (value) {
+                          // setState(() {
+                          //   endedAt = value;
+                          // });
+                        },
+                      ),
                     ),
                   ),
                   const SizedBox(height: 8),
                   FormLabel(
-                    '担当者名',
+                    '撮影担当者名',
                     child: CustomTextField(
                       controller: insertedUserName,
                       textInputType: TextInputType.text,
@@ -364,7 +435,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   ),
                   const SizedBox(height: 8),
                   FormLabel(
-                    '担当者電話番号',
+                    '撮影担当者電話番号',
                     child: CustomTextField(
                       controller: insertedUserTel,
                       textInputType: TextInputType.text,
@@ -374,39 +445,21 @@ class _Step1ScreenState extends State<Step1Screen> {
                   ),
                   const SizedBox(height: 8),
                   FormLabel(
-                    '撮影時間',
-                    child: CustomTextField(
-                      controller: insertedTime,
-                      textInputType: TextInputType.text,
-                      maxLines: 1,
-                      hintText: '例）1時間程度',
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  FormLabel(
                     '席の予約',
-                    child: Container(
-                      decoration: const BoxDecoration(
-                        border: Border(
-                          top: BorderSide(color: kDisabledColor),
-                          bottom: BorderSide(color: kDisabledColor),
-                        ),
-                      ),
-                      child: CheckboxListTile(
-                        title: const Text('必要な場合はチェックを入れてください'),
-                        value: insertedReserved,
-                        onChanged: (value) {
-                          setState(() {
-                            insertedReserved = value ?? false;
-                          });
-                        },
-                        controlAffinity: ListTileControlAffinity.leading,
-                      ),
+                    child: CustomCheckbox(
+                      label: '必要な場合はチェックを入れてください',
+                      value: insertedReserved,
+                      onChanged: (value) {
+                        setState(() {
+                          insertedReserved = value ?? false;
+                        });
+                      },
+                      borderView: true,
                     ),
                   ),
                   const SizedBox(height: 8),
                   FormLabel(
-                    '取材店舗',
+                    '撮影店舗',
                     child: CustomTextField(
                       controller: insertedShopName,
                       textInputType: TextInputType.text,
@@ -416,7 +469,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   ),
                   const SizedBox(height: 8),
                   FormLabel(
-                    '訪問人数',
+                    'いらっしゃる人数',
                     child: CustomTextField(
                       controller: insertedVisitors,
                       textInputType: TextInputType.text,
@@ -442,7 +495,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                     child: CustomTextField(
                       controller: remarks,
                       textInputType: TextInputType.multiline,
-                      maxLines: null,
+                      maxLines: 5,
                     ),
                   ),
                   const SizedBox(height: 16),
