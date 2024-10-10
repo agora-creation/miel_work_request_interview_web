@@ -1,6 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:miel_work_request_interview_web/models/user.dart';
 import 'package:miel_work_request_interview_web/services/fm.dart';
 import 'package:miel_work_request_interview_web/services/request_interview.dart';
 import 'package:miel_work_request_interview_web/services/user.dart';
@@ -91,17 +90,17 @@ class RequestInterviewProvider with ChangeNotifier {
         });
       });
       //通知
-      List<UserModel> sendUsers = [];
-      sendUsers = await _userService.selectList();
-      if (sendUsers.isNotEmpty) {
-        for (UserModel user in sendUsers) {
-          _fmService.send(
-            token: user.token,
-            title: '社外申請',
-            body: '取材の申込がありました',
-          );
-        }
-      }
+      // List<UserModel> sendUsers = [];
+      // sendUsers = await _userService.selectList();
+      // if (sendUsers.isNotEmpty) {
+      //   for (UserModel user in sendUsers) {
+      //     _fmService.send(
+      //       token: user.token,
+      //       title: '社外申請',
+      //       body: '取材の申込がありました',
+      //     );
+      //   }
+      // }
     } catch (e) {
       error = '申込に失敗しました';
     }
