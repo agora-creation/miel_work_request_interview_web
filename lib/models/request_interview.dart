@@ -101,8 +101,9 @@ class RequestInterviewModel {
     _castInfo = data['castInfo'] ?? '';
     _featureContent = data['featureContent'] ?? '';
     _publishedAt = data['publishedAt'] ?? '';
-    _interviewedStartedAt = data['interviewedStartedAt'] ?? DateTime.now();
-    _interviewedEndedAt = data['interviewedEndedAt'] ?? DateTime.now();
+    _interviewedStartedAt =
+        data['interviewedStartedAt'].toDate() ?? DateTime.now();
+    _interviewedEndedAt = data['interviewedEndedAt'].toDate() ?? DateTime.now();
     _interviewedAtPending = data['interviewedAtPending'] ?? false;
     _interviewedUserName = data['interviewedUserName'] ?? '';
     _interviewedUserTel = data['interviewedUserTel'] ?? '';
@@ -111,16 +112,16 @@ class RequestInterviewModel {
     _interviewedVisitors = data['interviewedVisitors'] ?? '';
     _interviewedContent = data['interviewedContent'] ?? '';
     _location = data['location'] ?? false;
-    _locationStartedAt = data['locationStartedAt'] ?? DateTime.now();
-    _locationEndedAt = data['locationEndedAt'] ?? DateTime.now();
+    _locationStartedAt = data['locationStartedAt'].toDate() ?? DateTime.now();
+    _locationEndedAt = data['locationEndedAt'].toDate() ?? DateTime.now();
     _locationAtPending = data['locationAtPending'] ?? false;
     _locationUserName = data['locationUserName'] ?? '';
     _locationUserTel = data['locationUserTel'] ?? '';
     _locationVisitors = data['locationVisitors'] ?? '';
     _locationContent = data['locationContent'] ?? '';
     _insert = data['insert'] ?? false;
-    _insertedStartedAt = data['insertedStartedAt'] ?? DateTime.now();
-    _insertedEndedAt = data['insertedEndedAt'] ?? DateTime.now();
+    _insertedStartedAt = data['insertedStartedAt'].toDate() ?? DateTime.now();
+    _insertedEndedAt = data['insertedEndedAt'].toDate() ?? DateTime.now();
     _insertedAtPending = data['insertedAtPending'] ?? false;
     _insertedUserName = data['insertedUserName'] ?? '';
     _insertedUserTel = data['insertedUserTel'] ?? '';
