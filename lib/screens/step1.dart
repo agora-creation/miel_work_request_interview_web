@@ -28,28 +28,72 @@ class _Step1ScreenState extends State<Step1Screen> {
   TextEditingController castInfo = TextEditingController();
   TextEditingController featureContent = TextEditingController();
   TextEditingController publishedAt = TextEditingController();
-  TextEditingController interviewedAt = TextEditingController();
+  DateTime interviewedStartedAt = DateTime.now();
+  DateTime interviewedEndedAt = DateTime.now();
+  bool interviewedAtPending = false;
   TextEditingController interviewedUserName = TextEditingController();
   TextEditingController interviewedUserTel = TextEditingController();
-  TextEditingController interviewedTime = TextEditingController();
   bool interviewedReserved = false;
   TextEditingController interviewedShopName = TextEditingController();
   TextEditingController interviewedVisitors = TextEditingController();
   TextEditingController interviewedContent = TextEditingController();
-  TextEditingController locationAt = TextEditingController();
+  bool location = false;
+  DateTime locationStartedAt = DateTime.now();
+  DateTime locationEndedAt = DateTime.now();
+  bool locationAtPending = false;
   TextEditingController locationUserName = TextEditingController();
   TextEditingController locationUserTel = TextEditingController();
   TextEditingController locationVisitors = TextEditingController();
   TextEditingController locationContent = TextEditingController();
-  TextEditingController insertedAt = TextEditingController();
+  bool insert = false;
+  DateTime insertedStartedAt = DateTime.now();
+  DateTime insertedEndedAt = DateTime.now();
+  bool insertedAtPending = false;
   TextEditingController insertedUserName = TextEditingController();
   TextEditingController insertedUserTel = TextEditingController();
-  TextEditingController insertedTime = TextEditingController();
   bool insertedReserved = false;
   TextEditingController insertedShopName = TextEditingController();
   TextEditingController insertedVisitors = TextEditingController();
   TextEditingController insertedContent = TextEditingController();
   TextEditingController remarks = TextEditingController();
+
+  @override
+  void initState() {
+    interviewedStartedAt = DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+      10,
+      0,
+      0,
+    );
+    interviewedEndedAt = interviewedStartedAt.add(
+      const Duration(hours: 2),
+    );
+    locationStartedAt = DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+      10,
+      0,
+      0,
+    );
+    locationEndedAt = locationStartedAt.add(
+      const Duration(hours: 2),
+    );
+    insertedStartedAt = DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+      10,
+      0,
+      0,
+    );
+    insertedEndedAt = insertedStartedAt.add(
+      const Duration(hours: 2),
+    );
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -179,7 +223,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                       hintText: '例）令和元年11月1日10時から放送予定',
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 16),
                   const DottedDivider(),
                   const SizedBox(height: 16),
                   const Text(
@@ -194,31 +238,36 @@ class _Step1ScreenState extends State<Step1Screen> {
                   FormLabel(
                     '取材予定日時',
                     child: DatetimeRangeForm(
-                      startedAt: DateTime.now(),
+                      startedAt: interviewedStartedAt,
                       startedOnTap: () async =>
                           await CustomDateTimePicker().picker(
                         context: context,
-                        init: DateTime.now(),
+                        init: interviewedStartedAt,
                         title: '取材予定開始日時を選択',
                         onChanged: (value) {
-                          // setState(() {
-                          //   startedAt = value;
-                          //   endedAt = startedAt.add(const Duration(hours: 1));
-                          // });
+                          setState(() {
+                            interviewedStartedAt = value;
+                          });
                         },
                       ),
-                      endedAt: DateTime.now(),
+                      endedAt: interviewedEndedAt,
                       endedOnTap: () async =>
                           await CustomDateTimePicker().picker(
                         context: context,
-                        init: DateTime.now(),
+                        init: interviewedEndedAt,
                         title: '取材予定終了日時を選択',
                         onChanged: (value) {
-                          // setState(() {
-                          //   endedAt = value;
-                          // });
+                          setState(() {
+                            interviewedEndedAt = value;
+                          });
                         },
                       ),
+                      pending: interviewedAtPending,
+                      pendingOnChanged: (value) {
+                        setState(() {
+                          interviewedAtPending = value ?? false;
+                        });
+                      },
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -287,207 +336,240 @@ class _Step1ScreenState extends State<Step1Screen> {
                           '例）ひろめ太郎とゲストのひろめくんが館内を散策する様子とカツオのたたきや芋けんぴを食べる様子',
                     ),
                   ),
-                  const SizedBox(height: 24),
+                  const SizedBox(height: 16),
                   const DottedDivider(),
                   const SizedBox(height: 16),
                   CustomCheckbox(
                     label: 'ロケハンをする場合はチェックを入れてください',
-                    value: false,
-                    onChanged: (value) {},
+                    value: location,
+                    onChanged: (value) {
+                      setState(() {
+                        location = value ?? false;
+                      });
+                    },
                   ),
-                  const SizedBox(height: 8),
-                  const Text(
-                    'ロケハン情報',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'SourceHanSansJP-Bold',
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  FormLabel(
-                    'ロケハン予定日時',
-                    child: DatetimeRangeForm(
-                      startedAt: DateTime.now(),
-                      startedOnTap: () async =>
-                          await CustomDateTimePicker().picker(
-                        context: context,
-                        init: DateTime.now(),
-                        title: 'ロケハン予定開始日時を選択',
-                        onChanged: (value) {
-                          // setState(() {
-                          //   startedAt = value;
-                          //   endedAt = startedAt.add(const Duration(hours: 1));
-                          // });
-                        },
-                      ),
-                      endedAt: DateTime.now(),
-                      endedOnTap: () async =>
-                          await CustomDateTimePicker().picker(
-                        context: context,
-                        init: DateTime.now(),
-                        title: 'ロケハン予定終了日時を選択',
-                        onChanged: (value) {
-                          // setState(() {
-                          //   endedAt = value;
-                          // });
-                        },
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  FormLabel(
-                    'ロケハン担当者名',
-                    child: CustomTextField(
-                      controller: locationUserName,
-                      textInputType: TextInputType.text,
-                      maxLines: 1,
-                      hintText: '例）田中太郎',
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  FormLabel(
-                    'ロケハン担当者電話番号',
-                    child: CustomTextField(
-                      controller: locationUserTel,
-                      textInputType: TextInputType.text,
-                      maxLines: 1,
-                      hintText: '例）090-0000-0000',
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  FormLabel(
-                    'いらっしゃる人数',
-                    child: CustomTextField(
-                      controller: locationVisitors,
-                      textInputType: TextInputType.text,
-                      maxLines: 1,
-                      hintText: '例）2名',
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  FormLabel(
-                    'ロケハン内容・備考',
-                    child: CustomTextField(
-                      controller: locationContent,
-                      textInputType: TextInputType.multiline,
-                      maxLines: null,
-                      hintText: '例）9/17(火)〜9/20(金)のいずれかの日程で14:00〜15:00',
-                    ),
-                  ),
-                  const SizedBox(height: 24),
+                  location
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 8),
+                            const Text(
+                              'ロケハン情報',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'SourceHanSansJP-Bold',
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            FormLabel(
+                              'ロケハン予定日時',
+                              child: DatetimeRangeForm(
+                                startedAt: locationStartedAt,
+                                startedOnTap: () async =>
+                                    await CustomDateTimePicker().picker(
+                                  context: context,
+                                  init: locationStartedAt,
+                                  title: 'ロケハン予定開始日時を選択',
+                                  onChanged: (value) {
+                                    setState(() {
+                                      locationStartedAt = value;
+                                    });
+                                  },
+                                ),
+                                endedAt: locationEndedAt,
+                                endedOnTap: () async =>
+                                    await CustomDateTimePicker().picker(
+                                  context: context,
+                                  init: locationEndedAt,
+                                  title: 'ロケハン予定終了日時を選択',
+                                  onChanged: (value) {
+                                    setState(() {
+                                      locationEndedAt = value;
+                                    });
+                                  },
+                                ),
+                                pending: locationAtPending,
+                                pendingOnChanged: (value) {
+                                  setState(() {
+                                    locationAtPending = value ?? false;
+                                  });
+                                },
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            FormLabel(
+                              'ロケハン担当者名',
+                              child: CustomTextField(
+                                controller: locationUserName,
+                                textInputType: TextInputType.text,
+                                maxLines: 1,
+                                hintText: '例）田中太郎',
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            FormLabel(
+                              'ロケハン担当者電話番号',
+                              child: CustomTextField(
+                                controller: locationUserTel,
+                                textInputType: TextInputType.text,
+                                maxLines: 1,
+                                hintText: '例）090-0000-0000',
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            FormLabel(
+                              'いらっしゃる人数',
+                              child: CustomTextField(
+                                controller: locationVisitors,
+                                textInputType: TextInputType.text,
+                                maxLines: 1,
+                                hintText: '例）2名',
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            FormLabel(
+                              'ロケハン内容・備考',
+                              child: CustomTextField(
+                                controller: locationContent,
+                                textInputType: TextInputType.multiline,
+                                maxLines: null,
+                                hintText:
+                                    '例）9/17(火)〜9/20(金)のいずれかの日程で14:00〜15:00',
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(),
+                  const SizedBox(height: 16),
                   const DottedDivider(),
                   const SizedBox(height: 16),
                   CustomCheckbox(
                     label: 'インサート撮影をする場合はチェックを入れてください',
-                    value: false,
-                    onChanged: (value) {},
+                    value: insert,
+                    onChanged: (value) {
+                      setState(() {
+                        insert = value ?? false;
+                      });
+                    },
                   ),
-                  const SizedBox(height: 8),
-                  const Text(
-                    'インサート撮影情報',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'SourceHanSansJP-Bold',
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  FormLabel(
-                    '撮影予定日時',
-                    child: DatetimeRangeForm(
-                      startedAt: DateTime.now(),
-                      startedOnTap: () async =>
-                          await CustomDateTimePicker().picker(
-                        context: context,
-                        init: DateTime.now(),
-                        title: '撮影予定開始日時を選択',
-                        onChanged: (value) {
-                          // setState(() {
-                          //   startedAt = value;
-                          //   endedAt = startedAt.add(const Duration(hours: 1));
-                          // });
-                        },
-                      ),
-                      endedAt: DateTime.now(),
-                      endedOnTap: () async =>
-                          await CustomDateTimePicker().picker(
-                        context: context,
-                        init: DateTime.now(),
-                        title: '撮影予定終了日時を選択',
-                        onChanged: (value) {
-                          // setState(() {
-                          //   endedAt = value;
-                          // });
-                        },
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  FormLabel(
-                    '撮影担当者名',
-                    child: CustomTextField(
-                      controller: insertedUserName,
-                      textInputType: TextInputType.text,
-                      maxLines: 1,
-                      hintText: '例）山田太郎',
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  FormLabel(
-                    '撮影担当者電話番号',
-                    child: CustomTextField(
-                      controller: insertedUserTel,
-                      textInputType: TextInputType.text,
-                      maxLines: 1,
-                      hintText: '例）090-0000-0000',
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  FormLabel(
-                    '席の予約',
-                    child: CustomCheckbox(
-                      label: '必要な場合はチェックを入れてください',
-                      value: insertedReserved,
-                      onChanged: (value) {
-                        setState(() {
-                          insertedReserved = value ?? false;
-                        });
-                      },
-                      borderView: true,
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  FormLabel(
-                    '撮影店舗',
-                    child: CustomTextField(
-                      controller: insertedShopName,
-                      textInputType: TextInputType.text,
-                      maxLines: 1,
-                      hintText: '例）明神丸、黒潮物産',
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  FormLabel(
-                    'いらっしゃる人数',
-                    child: CustomTextField(
-                      controller: insertedVisitors,
-                      textInputType: TextInputType.text,
-                      maxLines: 1,
-                      hintText: '例）3名',
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  FormLabel(
-                    '撮影内容・備考',
-                    child: CustomTextField(
-                      controller: insertedContent,
-                      textInputType: TextInputType.multiline,
-                      maxLines: null,
-                      hintText: '例）ひろめ市場の内観・外観、カツオのたたきを焼いている映像',
-                    ),
-                  ),
-                  const SizedBox(height: 24),
+                  insert
+                      ? Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 8),
+                            const Text(
+                              'インサート撮影情報',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                fontFamily: 'SourceHanSansJP-Bold',
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            FormLabel(
+                              '撮影予定日時',
+                              child: DatetimeRangeForm(
+                                startedAt: insertedStartedAt,
+                                startedOnTap: () async =>
+                                    await CustomDateTimePicker().picker(
+                                  context: context,
+                                  init: insertedStartedAt,
+                                  title: '撮影予定開始日時を選択',
+                                  onChanged: (value) {
+                                    setState(() {
+                                      insertedStartedAt = value;
+                                    });
+                                  },
+                                ),
+                                endedAt: insertedEndedAt,
+                                endedOnTap: () async =>
+                                    await CustomDateTimePicker().picker(
+                                  context: context,
+                                  init: insertedEndedAt,
+                                  title: '撮影予定終了日時を選択',
+                                  onChanged: (value) {
+                                    setState(() {
+                                      insertedEndedAt = value;
+                                    });
+                                  },
+                                ),
+                                pending: insertedAtPending,
+                                pendingOnChanged: (value) {
+                                  setState(() {
+                                    insertedAtPending = value ?? false;
+                                  });
+                                },
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            FormLabel(
+                              '撮影担当者名',
+                              child: CustomTextField(
+                                controller: insertedUserName,
+                                textInputType: TextInputType.text,
+                                maxLines: 1,
+                                hintText: '例）山田太郎',
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            FormLabel(
+                              '撮影担当者電話番号',
+                              child: CustomTextField(
+                                controller: insertedUserTel,
+                                textInputType: TextInputType.text,
+                                maxLines: 1,
+                                hintText: '例）090-0000-0000',
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            FormLabel(
+                              '席の予約',
+                              child: CustomCheckbox(
+                                label: '必要な場合はチェックを入れてください',
+                                value: insertedReserved,
+                                onChanged: (value) {
+                                  setState(() {
+                                    insertedReserved = value ?? false;
+                                  });
+                                },
+                                borderView: true,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            FormLabel(
+                              '撮影店舗',
+                              child: CustomTextField(
+                                controller: insertedShopName,
+                                textInputType: TextInputType.text,
+                                maxLines: 1,
+                                hintText: '例）明神丸、黒潮物産',
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            FormLabel(
+                              'いらっしゃる人数',
+                              child: CustomTextField(
+                                controller: insertedVisitors,
+                                textInputType: TextInputType.text,
+                                maxLines: 1,
+                                hintText: '例）3名',
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            FormLabel(
+                              '撮影内容・備考',
+                              child: CustomTextField(
+                                controller: insertedContent,
+                                textInputType: TextInputType.multiline,
+                                maxLines: null,
+                                hintText: '例）ひろめ市場の内観・外観、カツオのたたきを焼いている映像',
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(),
+                  const SizedBox(height: 16),
                   const DottedDivider(),
                   const SizedBox(height: 16),
                   FormLabel(
@@ -521,23 +603,29 @@ class _Step1ScreenState extends State<Step1Screen> {
                             castInfo: castInfo.text,
                             featureContent: featureContent.text,
                             publishedAt: publishedAt.text,
-                            interviewedAt: interviewedAt.text,
+                            interviewedStartedAt: interviewedStartedAt,
+                            interviewedEndedAt: interviewedEndedAt,
+                            interviewedAtPending: interviewedAtPending,
                             interviewedUserName: interviewedUserName.text,
                             interviewedUserTel: interviewedUserTel.text,
-                            interviewedTime: interviewedTime.text,
                             interviewedReserved: interviewedReserved,
                             interviewedShopName: interviewedShopName.text,
                             interviewedVisitors: interviewedVisitors.text,
                             interviewedContent: interviewedContent.text,
-                            locationAt: locationAt.text,
+                            location: location,
+                            locationStartedAt: locationStartedAt,
+                            locationEndedAt: locationEndedAt,
+                            locationAtPending: locationAtPending,
                             locationUserName: locationUserName.text,
                             locationUserTel: locationUserTel.text,
                             locationVisitors: locationVisitors.text,
                             locationContent: locationContent.text,
-                            insertedAt: insertedAt.text,
+                            insert: insert,
+                            insertedStartedAt: insertedStartedAt,
+                            insertedEndedAt: insertedEndedAt,
+                            insertedAtPending: insertedAtPending,
                             insertedUserName: insertedUserName.text,
                             insertedUserTel: insertedUserTel.text,
-                            insertedTime: insertedTime.text,
                             insertedReserved: insertedReserved,
                             insertedShopName: insertedShopName.text,
                             insertedVisitors: insertedVisitors.text,

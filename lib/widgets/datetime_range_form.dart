@@ -8,12 +8,16 @@ class DatetimeRangeForm extends StatelessWidget {
   final Function() startedOnTap;
   final DateTime endedAt;
   final Function() endedOnTap;
+  final bool pending;
+  final Function(bool?) pendingOnChanged;
 
   const DatetimeRangeForm({
     required this.startedAt,
     required this.startedOnTap,
     required this.endedAt,
     required this.endedOnTap,
+    required this.pending,
+    required this.pendingOnChanged,
     super.key,
   });
 
@@ -43,11 +47,13 @@ class DatetimeRangeForm extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        dateText('yyyy年MM月dd日(E)', startedAt),
+                        !pending
+                            ? dateText('yyyy年MM月dd日(E)', startedAt)
+                            : '----年--月--日(-)',
                         style: const TextStyle(fontSize: 18),
                       ),
                       Text(
-                        dateText('HH:mm', startedAt),
+                        !pending ? dateText('HH:mm', startedAt) : '--:--',
                         style: const TextStyle(
                           fontSize: 40,
                           fontWeight: FontWeight.bold,
@@ -67,11 +73,13 @@ class DatetimeRangeForm extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        dateText('yyyy年MM月dd日(E)', endedAt),
+                        !pending
+                            ? dateText('yyyy年MM月dd日(E)', endedAt)
+                            : '----年--月--日(-)',
                         style: const TextStyle(fontSize: 18),
                       ),
                       Text(
-                        dateText('HH:mm', endedAt),
+                        !pending ? dateText('HH:mm', endedAt) : '--:--',
                         style: const TextStyle(
                           fontSize: 40,
                           fontWeight: FontWeight.bold,
@@ -81,6 +89,18 @@ class DatetimeRangeForm extends StatelessWidget {
                   ),
                 ),
               ],
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              border: Border(top: BorderSide(color: kBorderColor)),
+            ),
+            padding: const EdgeInsets.only(top: 8),
+            width: double.infinity,
+            child: CheckboxListTile(
+              value: pending,
+              onChanged: pendingOnChanged,
+              title: const Text('未定'),
             ),
           ),
         ],
