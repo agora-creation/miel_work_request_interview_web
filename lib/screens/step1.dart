@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:miel_work_request_interview_web/common/custom_date_time_picker.dart';
+import 'package:miel_work_request_interview_web/common/functions.dart';
 import 'package:miel_work_request_interview_web/common/style.dart';
+import 'package:miel_work_request_interview_web/providers/request_interview.dart';
 import 'package:miel_work_request_interview_web/screens/step2.dart';
 import 'package:miel_work_request_interview_web/widgets/custom_button.dart';
 import 'package:miel_work_request_interview_web/widgets/custom_checkbox.dart';
@@ -10,6 +12,7 @@ import 'package:miel_work_request_interview_web/widgets/dotted_divider.dart';
 import 'package:miel_work_request_interview_web/widgets/form_label.dart';
 import 'package:miel_work_request_interview_web/widgets/responsive_box.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:provider/provider.dart';
 
 class Step1Screen extends StatefulWidget {
   const Step1Screen({super.key});
@@ -97,6 +100,7 @@ class _Step1ScreenState extends State<Step1Screen> {
 
   @override
   Widget build(BuildContext context) {
+    final interviewProvider = Provider.of<RequestInterviewProvider>(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Center(
@@ -129,6 +133,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   const SizedBox(height: 8),
                   FormLabel(
                     '申込会社名',
+                    required: true,
                     child: CustomTextField(
                       controller: companyName,
                       textInputType: TextInputType.text,
@@ -139,6 +144,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   const SizedBox(height: 8),
                   FormLabel(
                     '申込担当者名',
+                    required: true,
                     child: CustomTextField(
                       controller: companyUserName,
                       textInputType: TextInputType.text,
@@ -149,6 +155,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   const SizedBox(height: 8),
                   FormLabel(
                     '申込担当者メールアドレス',
+                    required: true,
                     child: CustomTextField(
                       controller: companyUserEmail,
                       textInputType: TextInputType.text,
@@ -166,6 +173,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                   const SizedBox(height: 8),
                   FormLabel(
                     '申込担当者電話番号',
+                    required: true,
                     child: CustomTextField(
                       controller: companyUserTel,
                       textInputType: TextInputType.text,
@@ -209,7 +217,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                     child: CustomTextField(
                       controller: featureContent,
                       textInputType: TextInputType.multiline,
-                      maxLines: null,
+                      maxLines: 3,
                       hintText: '例）賑わうひろめ市場の様子と高知の名物料理特集',
                     ),
                   ),
@@ -331,7 +339,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                     child: CustomTextField(
                       controller: interviewedContent,
                       textInputType: TextInputType.multiline,
-                      maxLines: null,
+                      maxLines: 3,
                       hintText:
                           '例）ひろめ太郎とゲストのひろめくんが館内を散策する様子とカツオのたたきや芋けんぴを食べる様子',
                     ),
@@ -433,7 +441,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                               child: CustomTextField(
                                 controller: locationContent,
                                 textInputType: TextInputType.multiline,
-                                maxLines: null,
+                                maxLines: 3,
                                 hintText:
                                     '例）9/17(火)〜9/20(金)のいずれかの日程で14:00〜15:00',
                               ),
@@ -562,7 +570,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                               child: CustomTextField(
                                 controller: insertedContent,
                                 textInputType: TextInputType.multiline,
-                                maxLines: null,
+                                maxLines: 3,
                                 hintText: '例）ひろめ市場の内観・外観、カツオのたたきを焼いている映像',
                               ),
                             ),
@@ -589,6 +597,18 @@ class _Step1ScreenState extends State<Step1Screen> {
                     labelColor: kWhiteColor,
                     backgroundColor: kBlueColor,
                     onPressed: () async {
+                      String? error = await interviewProvider.check(
+                        companyName: companyName.text,
+                        companyUserName: companyUserName.text,
+                        companyUserEmail: companyUserEmail.text,
+                        companyUserTel: companyUserTel.text,
+                      );
+                      if (error != null) {
+                        if (!mounted) return;
+                        showMessage(context, error, false);
+                        return;
+                      }
+                      if (!mounted) return;
                       Navigator.push(
                         context,
                         PageTransition(
