@@ -181,17 +181,21 @@ DateTime rebuildTime(BuildContext context, DateTime? date, String? time) {
 
 Future<bool> mailSend(Map<String, String> data) async {
   bool ret = false;
-  final response = await http.post(
-    Uri.parse('https://hirome.co.jp/api/send_request_interview.php'),
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'application/json; charset=UTF-8',
-      'Accept': '*/*'
-    },
-    body: jsonEncode(data),
-  );
-  if (response.statusCode == 200) {
-    ret = true;
+  try {
+    final response = await http.post(
+      Uri.parse('https://hirome.co.jp/api/send_request_interview.php'),
+      headers: {
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'POST, OPTIONS',
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(data),
+    );
+    if (response.statusCode == 200) {
+      ret = true;
+    }
+  } catch (e) {
+    print(e.toString());
   }
   return ret;
 }

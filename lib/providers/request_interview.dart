@@ -130,7 +130,7 @@ class RequestInterviewProvider with ChangeNotifier {
         }
       }
       //メール送信
-      await mailSend({
+      bool res = await mailSend({
         'companyName': companyName,
         'companyUserName': companyUserName,
         'companyUserEmail': companyUserEmail,
@@ -171,7 +171,7 @@ class RequestInterviewProvider with ChangeNotifier {
         'remarks': remarks,
       });
     } catch (e) {
-      error = '申込に失敗しました';
+      error = '申込に失敗しました$e';
     }
     return error;
   }
