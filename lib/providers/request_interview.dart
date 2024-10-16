@@ -153,6 +153,7 @@ class RequestInterviewProvider with ChangeNotifier {
         'subject': '【自動送信】取材申込完了のお知らせ',
         'message': message,
         'createdAt': DateTime.now(),
+        'expirationAt': DateTime.now().add(const Duration(hours: 1)),
       });
       //通知
       List<UserModel> sendUsers = [];
