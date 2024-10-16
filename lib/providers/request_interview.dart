@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:miel_work_request_interview_web/common/functions.dart';
 import 'package:miel_work_request_interview_web/models/user.dart';
 import 'package:miel_work_request_interview_web/services/fm.dart';
 import 'package:miel_work_request_interview_web/services/request_interview.dart';
@@ -128,6 +129,47 @@ class RequestInterviewProvider with ChangeNotifier {
           );
         }
       }
+      //メール送信
+      await mailSend({
+        'companyName': companyName,
+        'companyUserName': companyUserName,
+        'companyUserEmail': companyUserEmail,
+        'companyUserTel': companyUserTel,
+        'mediaName': mediaName,
+        'programName': programName,
+        'castInfo': castInfo,
+        'featureContent': featureContent,
+        'publishedAt': publishedAt,
+        'interviewedStartedAt':
+            dateText('yyyy/MM/dd HH:mm', interviewedStartedAt),
+        'interviewedEndedAt': dateText('yyyy/MM/dd HH:mm', interviewedEndedAt),
+        'interviewedAtPending': interviewedAtPending ? '未定' : '',
+        'interviewedUserName': interviewedUserName,
+        'interviewedUserTel': interviewedUserTel,
+        'interviewedReserved': interviewedReserved ? '必要' : '',
+        'interviewedShopName': interviewedShopName,
+        'interviewedVisitors': interviewedVisitors,
+        'interviewedContent': interviewedContent,
+        'location': location ? '有' : '',
+        'locationStartedAt': dateText('yyyy/MM/dd HH:mm', locationStartedAt),
+        'locationEndedAt': dateText('yyyy/MM/dd HH:mm', locationEndedAt),
+        'locationAtPending': locationAtPending ? '未定' : '',
+        'locationUserName': locationUserName,
+        'locationUserTel': locationUserTel,
+        'locationVisitors': locationVisitors,
+        'locationContent': locationContent,
+        'insert': insert ? '有' : '',
+        'insertedStartedAt': dateText('yyyy/MM/dd HH:mm', insertedStartedAt),
+        'insertedEndedAt': dateText('yyyy/MM/dd HH:mm', insertedEndedAt),
+        'insertedAtPending': insertedAtPending ? '未定' : '',
+        'insertedUserName': insertedUserName,
+        'insertedUserTel': insertedUserTel,
+        'insertedReserved': insertedReserved ? '必要' : '',
+        'insertedShopName': insertedShopName,
+        'insertedVisitors': insertedVisitors,
+        'insertedContent': insertedContent,
+        'remarks': remarks,
+      });
     } catch (e) {
       error = '申込に失敗しました';
     }

@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:alert_banner/exports.dart';
 import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:miel_work_request_interview_web/common/date_machine_util.dart';
 import 'package:miel_work_request_interview_web/common/style.dart';
@@ -172,6 +175,21 @@ DateTime rebuildTime(BuildContext context, DateTime? date, String? time) {
     String tmpDate = dateText('yyyy-MM-dd', date);
     String tmpTime = '${time.padLeft(5, '0')}:00.000';
     ret = DateTime.parse('$tmpDate $tmpTime');
+  }
+  return ret;
+}
+
+Future<bool> mailSend(Map<String, String> data) async {
+  bool ret = false;
+  final response = await http.post(
+    Uri.parse('https://hirome.co.jp/api/send_request_interview.php'),
+    headers: {
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(data),
+  );
+  if (response.statusCode == 200) {
+    ret = true;
   }
   return ret;
 }

@@ -98,6 +98,8 @@ class _Step1ScreenState extends State<Step1Screen> {
     super.initState();
   }
 
+  String error = '';
+
   @override
   Widget build(BuildContext context) {
     final interviewProvider = Provider.of<RequestInterviewProvider>(context);
