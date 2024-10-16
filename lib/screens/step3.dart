@@ -33,6 +33,8 @@ class _Step3ScreenState extends State<Step3Screen> {
               children: [
                 const Text('申込ありがとうございました。'),
                 const Text('申込内容を確認させていただき、返信いたしますので、よろしくお願いいたします。'),
+                const Text(
+                    'また、ご入力いただいたメールアドレスに申込完了メールを自動送信しております。ご確認よろしくお願いいたします。'),
                 const SizedBox(height: 16),
                 const Text('このページはそのまま閉じても構いません。'),
                 const SizedBox(height: 24),
