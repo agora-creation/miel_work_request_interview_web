@@ -2,12 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:miel_work_request_interview_web/models/user.dart';
 import 'package:miel_work_request_interview_web/services/fm.dart';
+import 'package:miel_work_request_interview_web/services/mail.dart';
 import 'package:miel_work_request_interview_web/services/request_interview.dart';
 import 'package:miel_work_request_interview_web/services/user.dart';
 
 class RequestInterviewProvider with ChangeNotifier {
   final RequestInterviewService _interviewService = RequestInterviewService();
   final UserService _userService = UserService();
+  final MailService _mailService = MailService();
   final FmService _fmService = FmService();
 
   Future<String?> check({
@@ -115,6 +117,42 @@ class RequestInterviewProvider with ChangeNotifier {
           'approvalUsers': [],
           'createdAt': DateTime.now(),
         });
+      });
+      String message = '''
+取材申込が完了いたしました。以下ご確認ください。
+━━━━━━━━━━━━━━
+■申込者情報
+【申込会社名】
+【申込担当者名】
+【申込担当者メールアドレス】info@agora-c.com
+【申込担当者電話番号】
+【媒体名】
+【番組・雑誌名】
+【出演者情報】
+【特集内容・備考】
+
+【OA・掲載予定日】
+
+■取材当日情報
+【取材予定日時】
+【取材担当者名】
+【取材担当者電話番号】
+【席の予約】
+【取材店舗】
+【いらっしゃる人数】
+【取材内容・備考】
+
+
+【その他連絡事項】
+
+━━━━━━━━━━━━━━
+      ''';
+      _mailService.create({
+        'id': _mailService.id(),
+        'to': companyUserEmail,
+        'subject': '【自動送信】取材申込完了のお知らせ',
+        'message': message,
+        'createdAt': DateTime.now(),
       });
       //通知
       List<UserModel> sendUsers = [];
