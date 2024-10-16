@@ -130,7 +130,7 @@ class RequestInterviewProvider with ChangeNotifier {
         }
       }
       //メール送信
-      bool res = await mailSend({
+      await mailSend({
         'companyName': companyName,
         'companyUserName': companyUserName,
         'companyUserEmail': companyUserEmail,
