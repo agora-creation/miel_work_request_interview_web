@@ -129,7 +129,7 @@ class RequestInterviewProvider with ChangeNotifier {
         }
       }
     } catch (e) {
-      error = '申込に失敗しました$e';
+      error = '申込に失敗しました';
     }
     return error;
   }
