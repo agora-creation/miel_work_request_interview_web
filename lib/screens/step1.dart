@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mailer/mailer.dart';
-import 'package:mailer/smtp_server.dart';
 import 'package:miel_work_request_interview_web/common/custom_date_time_picker.dart';
 import 'package:miel_work_request_interview_web/common/functions.dart';
 import 'package:miel_work_request_interview_web/common/style.dart';
@@ -100,8 +98,6 @@ class _Step1ScreenState extends State<Step1Screen> {
     super.initState();
   }
 
-  String error = '';
-
   @override
   Widget build(BuildContext context) {
     final interviewProvider = Provider.of<RequestInterviewProvider>(context);
@@ -122,37 +118,7 @@ class _Step1ScreenState extends State<Step1Screen> {
               const SizedBox(height: 24),
               ResponsiveBox(
                 children: [
-                  GestureDetector(
-                    onTap: () async {
-                      final smtpServer = SmtpServer(
-                        'sv215.xbiz.ne.jp',
-                        username: 'apple@hirome.co.jp',
-                        password: '56XjSHc_JjzeJxtV',
-                        port: 465,
-                        ssl: true,
-                      );
-                      final message = Message()
-                        ..from = Address('apple@hirome.co.jp', 'ひろめ') // 送信者名
-                        ..recipients.add('info@agora-c.com') // 受信者
-                        ..subject =
-                            'Test Email from Flutter with Custom Domain' // 件名
-                        ..text =
-                            'This is a test email sent from Flutter Web with a custom domain.' // 本文
-                        ..html =
-                            "<h1>Test Email</h1>\n<p>This is a test email from <b>Flutter Web</b> with a custom domain!</p>";
-                      try {
-                        final sendReport = await send(message, smtpServer);
-                        setState(() {
-                          error = sendReport.toString();
-                        });
-                      } catch (e) {
-                        setState(() {
-                          error = e.toString();
-                        });
-                      }
-                    },
-                    child: Text('以下のフォームにご入力いただき、申込を行なってください。$error'),
-                  ),
+                  const Text('以下のフォームにご入力いただき、申込を行なってください。'),
                   const SizedBox(height: 16),
                   const DottedDivider(),
                   const SizedBox(height: 16),
