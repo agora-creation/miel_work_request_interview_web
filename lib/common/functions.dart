@@ -184,7 +184,9 @@ Future<bool> mailSend(Map<String, String> data) async {
   final response = await http.post(
     Uri.parse('https://hirome.co.jp/api/send_request_interview.php'),
     headers: {
+      'Access-Control-Allow-Origin': '*',
       'Content-Type': 'application/json; charset=UTF-8',
+      'Accept': '*/*'
     },
     body: jsonEncode(data),
   );
