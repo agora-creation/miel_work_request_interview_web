@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:miel_work_request_interview_web/common/functions.dart';
 import 'package:miel_work_request_interview_web/models/user.dart';
 import 'package:miel_work_request_interview_web/services/fm.dart';
 import 'package:miel_work_request_interview_web/services/mail.dart';
@@ -118,34 +119,98 @@ class RequestInterviewProvider with ChangeNotifier {
           'createdAt': DateTime.now(),
         });
       });
-      String message = '''
-取材申込が完了いたしました。以下ご確認ください。
-━━━━━━━━━━━━━━
-■申込者情報
-【申込会社名】
-【申込担当者名】
-【申込担当者メールアドレス】info@agora-c.com
-【申込担当者電話番号】
-【媒体名】
-【番組・雑誌名】
-【出演者情報】
-【特集内容・備考】
+      String interviewedAtText = '';
+      if (interviewedAtPending) {
+        interviewedAtText = '未定';
+      } else {
+        interviewedAtText =
+            '${dateText('yyyy/MM/dd HH:mm', interviewedStartedAt)}〜${dateText('yyyy/MM/dd HH:mm', interviewedEndedAt)}';
+      }
+      String interviewedReservedText = '';
+      if (interviewedReserved) {
+        interviewedReservedText = '必要';
+      }
+      String locationText = '';
+      if (location) {
+        String locationAtText = '';
+        if (locationAtPending) {
+          locationAtText = '未定';
+        } else {
+          locationAtText =
+              '${dateText('yyyy/MM/dd HH:mm', locationStartedAt)}〜${dateText('yyyy/MM/dd HH:mm', locationEndedAt)}';
+        }
+        locationText = '''
+■ロケハン情報
+【ロケハン予定日時】$locationAtText
+【ロケハン担当者名】$locationUserName
+【ロケハン担当者電話番号】$locationUserTel
+【いらっしゃる人数】$locationVisitors
+【ロケハン内容・備考】
+$locationContent
 
+        ''';
+      }
+      String insertText = '';
+      if (insert) {
+        String insertedAt = '';
+        if (insertedAtPending) {
+          insertedAt = '未定';
+        } else {
+          insertedAt =
+              '${dateText('yyyy/MM/dd HH:mm', insertedStartedAt)}〜${dateText('yyyy/MM/dd HH:mm', insertedEndedAt)}';
+        }
+        String insertedReservedText = '';
+        if (insertedReserved) {
+          insertedReservedText = '必要';
+        }
+        insertText = '''
+■インサート撮影情報
+【撮影予定日時】$insertedAt
+【撮影担当者名】$insertedUserName
+【撮影担当者電話番号】$insertedUserTel
+【席の予約】$insertedReservedText
+【撮影店舗】$insertedShopName
+【いらっしゃる人数】$insertedVisitors
+【撮影内容・備考】
+$insertedContent
+
+        ''';
+      }
+      String message = '''
+★★★このメールは自動返信メールです★★★
+
+取材申込が完了いたしました。
+以下申込内容を確認し、ご返信させていただきますので今暫くお待ちください。
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+■申込者情報
+【申込会社名】$companyName
+【申込担当者名】$companyUserName
+【申込担当者メールアドレス】$companyUserEmail
+【申込担当者電話番号】$companyUserTel
+【媒体名】$mediaName
+【番組・雑誌名】$programName
+【出演者情報】$castInfo
+【特集内容・備考】
+$featureContent
 【OA・掲載予定日】
+$publishedAt
 
 ■取材当日情報
-【取材予定日時】
-【取材担当者名】
-【取材担当者電話番号】
-【席の予約】
-【取材店舗】
-【いらっしゃる人数】
+【取材予定日時】$interviewedAtText
+【取材担当者名】$interviewedUserName
+【取材担当者電話番号】$interviewedUserTel
+【席の予約】$interviewedReservedText
+【取材店舗】$interviewedShopName
+【いらっしゃる人数】$interviewedVisitors
 【取材内容・備考】
+$interviewedContent
 
-
+$locationText
+$insertText
 【その他連絡事項】
+$remarks
 
-━━━━━━━━━━━━━━
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
       ''';
       _mailService.create({
         'id': _mailService.id(),
