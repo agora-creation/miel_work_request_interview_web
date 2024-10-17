@@ -1,4 +1,6 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart' as storage;
 import 'package:flutter/material.dart';
 import 'package:miel_work_request_interview_web/common/functions.dart';
 import 'package:miel_work_request_interview_web/models/user.dart';
@@ -6,6 +8,7 @@ import 'package:miel_work_request_interview_web/services/fm.dart';
 import 'package:miel_work_request_interview_web/services/mail.dart';
 import 'package:miel_work_request_interview_web/services/request_interview.dart';
 import 'package:miel_work_request_interview_web/services/user.dart';
+import 'package:path/path.dart' as p;
 
 class RequestInterviewProvider with ChangeNotifier {
   final RequestInterviewService _interviewService = RequestInterviewService();
@@ -64,6 +67,7 @@ class RequestInterviewProvider with ChangeNotifier {
     required String insertedShopName,
     required String insertedVisitors,
     required String insertedContent,
+    required List<PlatformFile> pickedAttachedFiles,
     required String remarks,
   }) async {
     String? error;
@@ -72,8 +76,24 @@ class RequestInterviewProvider with ChangeNotifier {
     if (companyUserEmail == '') return '申込担当者メールアドレスは必須入力です';
     if (companyUserTel == '') return '申込担当者電話番号は必須入力です';
     try {
-      await FirebaseAuth.instance.signInAnonymously().then((value) {
+      await FirebaseAuth.instance.signInAnonymously().then((value) async {
         String id = _interviewService.id();
+        List<String> attachedFiles = [];
+        if (pickedAttachedFiles.isNotEmpty) {
+          int i = 0;
+          for (final file in pickedAttachedFiles) {
+            String ext = p.extension(file.name);
+            storage.UploadTask uploadTask;
+            storage.Reference ref = storage.FirebaseStorage.instance
+                .ref()
+                .child('requestInterview')
+                .child('/${id}_$i$ext');
+            uploadTask = ref.putData(file.bytes!);
+            await uploadTask.whenComplete(() => null);
+            String url = await ref.getDownloadURL();
+            attachedFiles.add(url);
+          }
+        }
         _interviewService.create({
           'id': id,
           'companyName': companyName,
@@ -112,7 +132,9 @@ class RequestInterviewProvider with ChangeNotifier {
           'insertedShopName': insertedShopName,
           'insertedVisitors': insertedVisitors,
           'insertedContent': insertedContent,
+          'attachedFiles': attachedFiles,
           'remarks': remarks,
+          'memo': '',
           'approval': 0,
           'approvedAt': DateTime.now(),
           'approvalUsers': [],

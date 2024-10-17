@@ -1,9 +1,12 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:miel_work_request_interview_web/common/custom_date_time_picker.dart';
 import 'package:miel_work_request_interview_web/common/functions.dart';
 import 'package:miel_work_request_interview_web/common/style.dart';
 import 'package:miel_work_request_interview_web/providers/request_interview.dart';
 import 'package:miel_work_request_interview_web/screens/step2.dart';
+import 'package:miel_work_request_interview_web/widgets/attached_file_list.dart';
+import 'package:miel_work_request_interview_web/widgets/custom_alert_dialog.dart';
 import 'package:miel_work_request_interview_web/widgets/custom_button.dart';
 import 'package:miel_work_request_interview_web/widgets/custom_checkbox.dart';
 import 'package:miel_work_request_interview_web/widgets/custom_text_field.dart';
@@ -13,6 +16,7 @@ import 'package:miel_work_request_interview_web/widgets/form_label.dart';
 import 'package:miel_work_request_interview_web/widgets/link_text.dart';
 import 'package:miel_work_request_interview_web/widgets/responsive_box.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:path/path.dart' as p;
 import 'package:provider/provider.dart';
 
 class Step1Screen extends StatefulWidget {
@@ -59,10 +63,21 @@ class _Step1ScreenState extends State<Step1Screen> {
   TextEditingController insertedShopName = TextEditingController();
   TextEditingController insertedVisitors = TextEditingController();
   TextEditingController insertedContent = TextEditingController();
+  List<PlatformFile> pickedAttachedFiles = [];
   TextEditingController remarks = TextEditingController();
+
+  void _showCaution() async {
+    await Future.delayed(const Duration(seconds: 2));
+    if (!mounted) return;
+    showDialog(
+      context: context,
+      builder: (context) => const CautionDialog(),
+    );
+  }
 
   @override
   void initState() {
+    _showCaution();
     interviewedStartedAt = DateTime(
       DateTime.now().year,
       DateTime.now().month,
@@ -713,6 +728,42 @@ class _Step1ScreenState extends State<Step1Screen> {
                   const DottedDivider(),
                   const SizedBox(height: 16),
                   FormLabel(
+                    '添付ファイル',
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomButton(
+                          type: ButtonSizeType.sm,
+                          label: 'ファイル選択',
+                          labelColor: kWhiteColor,
+                          backgroundColor: kGreyColor,
+                          onPressed: () async {
+                            final result = await FilePicker.platform.pickFiles(
+                              type: FileType.any,
+                            );
+                            if (result == null) return;
+                            pickedAttachedFiles.addAll(result.files);
+                            setState(() {});
+                          },
+                        ),
+                        const SizedBox(height: 4),
+                        Column(
+                          children: pickedAttachedFiles.map((file) {
+                            return AttachedFileList(
+                              fileName: p.basename(file.name),
+                              onTap: () {
+                                pickedAttachedFiles.remove(file);
+                                setState(() {});
+                              },
+                              isClose: true,
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  FormLabel(
                     'その他連絡事項',
                     child: CustomTextField(
                       controller: remarks,
@@ -782,6 +833,7 @@ class _Step1ScreenState extends State<Step1Screen> {
                             insertedShopName: insertedShopName.text,
                             insertedVisitors: insertedVisitors.text,
                             insertedContent: insertedContent.text,
+                            pickedAttachedFiles: pickedAttachedFiles,
                             remarks: remarks.text,
                           ),
                         ),
@@ -796,6 +848,107 @@ class _Step1ScreenState extends State<Step1Screen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class CautionDialog extends StatelessWidget {
+  const CautionDialog({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomAlertDialog(
+      content: const SizedBox(
+        width: 600,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: 8),
+            Text(
+              '取材に関しての注意事項',
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'SourceHanSansJP-Bold',
+              ),
+            ),
+            SizedBox(height: 8),
+            Text('取材に際してご要望がございましたら、「その他連絡事項」にご記入ください。'),
+            SizedBox(height: 16),
+            Text(
+                '取材の日程が確定していない場合や、希望日が複数ある場合は、予定日時を「未定」にして、「その他連絡事項」にご入力ください。'),
+            Text(
+              '必ずしもご希望に添えるわけではありませんが、日程の候補を複数ご用意いただきますと、お申し込みが通りやすくなります。',
+              style: TextStyle(
+                color: kRedColor,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'SourceHanSansJP-Bold',
+              ),
+            ),
+            Text(
+              'ランチタイム・夕方〜夜間、土日祝日や大型連休中は館内の混雑が予想されますので、取材をお断りさせていただく場合がございます。',
+              style: TextStyle(
+                color: kRedColor,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'SourceHanSansJP-Bold',
+              ),
+            ),
+            SizedBox(height: 16),
+            Text(
+              '取材内容の精査にはお時間がかかりますので、2週間以上の余裕を持ってお申し込みください。',
+              style: TextStyle(
+                color: kRedColor,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'SourceHanSansJP-Bold',
+              ),
+            ),
+            Text(
+              '弊社担当より、取材の可否又は取材日程の調整について折り返しご連絡をさせていただきます。申込＝取材許可ではございませんのでご注意ください。',
+              style: TextStyle(
+                color: kRedColor,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'SourceHanSansJP-Bold',
+              ),
+            ),
+            SizedBox(height: 16),
+            Text(
+              '取材開始時と取材終了時にそれぞれ必ずひろめ市場インフォメーションにお声がけください。',
+              style: TextStyle(
+                color: kRedColor,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'SourceHanSansJP-Bold',
+              ),
+            ),
+            Text(
+              '周囲のお客様や店舗のスタッフへ事前に撮影についての説明を行い、ご迷惑にならないよう十分ご配慮ください。',
+              style: TextStyle(
+                color: kRedColor,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'SourceHanSansJP-Bold',
+              ),
+            ),
+            Text(
+              '館内の通路は非常に狭くなっております。渋滞や混雑が発生しないようにご注意ください。',
+              style: TextStyle(
+                color: kRedColor,
+                fontWeight: FontWeight.bold,
+                fontFamily: 'SourceHanSansJP-Bold',
+              ),
+            ),
+          ],
+        ),
+      ),
+      actionsAlignment: MainAxisAlignment.center,
+      actions: [
+        CustomButton(
+          type: ButtonSizeType.sm,
+          label: '了解しました',
+          labelColor: kWhiteColor,
+          backgroundColor: kGreyColor,
+          onPressed: () => Navigator.pop(context),
+        ),
+      ],
     );
   }
 }

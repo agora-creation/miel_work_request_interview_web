@@ -1,8 +1,10 @@
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:miel_work_request_interview_web/common/functions.dart';
 import 'package:miel_work_request_interview_web/common/style.dart';
 import 'package:miel_work_request_interview_web/providers/request_interview.dart';
 import 'package:miel_work_request_interview_web/screens/step3.dart';
+import 'package:miel_work_request_interview_web/widgets/attached_file_list.dart';
 import 'package:miel_work_request_interview_web/widgets/custom_button.dart';
 import 'package:miel_work_request_interview_web/widgets/dotted_divider.dart';
 import 'package:miel_work_request_interview_web/widgets/form_label.dart';
@@ -10,6 +12,7 @@ import 'package:miel_work_request_interview_web/widgets/form_value.dart';
 import 'package:miel_work_request_interview_web/widgets/link_text.dart';
 import 'package:miel_work_request_interview_web/widgets/responsive_box.dart';
 import 'package:page_transition/page_transition.dart';
+import 'package:path/path.dart' as p;
 import 'package:provider/provider.dart';
 
 class Step2Screen extends StatefulWidget {
@@ -49,6 +52,7 @@ class Step2Screen extends StatefulWidget {
   final String insertedShopName;
   final String insertedVisitors;
   final String insertedContent;
+  final List<PlatformFile> pickedAttachedFiles;
   final String remarks;
 
   const Step2Screen({
@@ -88,6 +92,7 @@ class Step2Screen extends StatefulWidget {
     required this.insertedShopName,
     required this.insertedVisitors,
     required this.insertedContent,
+    required this.pickedAttachedFiles,
     required this.remarks,
     super.key,
   });
@@ -271,7 +276,7 @@ class _Step2ScreenState extends State<Step2Screen> {
                             ),
                           ],
                         )
-                      : Container(),
+                      : const Text('ロケハンなし'),
                   const SizedBox(height: 16),
                   const DottedDivider(),
                   const SizedBox(height: 16),
@@ -330,10 +335,26 @@ class _Step2ScreenState extends State<Step2Screen> {
                             ),
                           ],
                         )
-                      : Container(),
+                      : const Text('インサート撮影なし'),
                   const SizedBox(height: 16),
                   const DottedDivider(),
                   const SizedBox(height: 16),
+                  FormLabel(
+                    '添付ファイル',
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Column(
+                          children: widget.pickedAttachedFiles.map((file) {
+                            return AttachedFileList(
+                              fileName: p.basename(file.name),
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 8),
                   FormLabel(
                     'その他連絡事項',
                     child: FormValue(widget.remarks),
@@ -384,6 +405,7 @@ class _Step2ScreenState extends State<Step2Screen> {
                         insertedShopName: widget.insertedShopName,
                         insertedVisitors: widget.insertedVisitors,
                         insertedContent: widget.insertedContent,
+                        pickedAttachedFiles: widget.pickedAttachedFiles,
                         remarks: widget.remarks,
                       );
                       if (error != null) {
