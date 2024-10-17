@@ -10,6 +10,7 @@ import 'package:miel_work_request_interview_web/widgets/custom_text_field.dart';
 import 'package:miel_work_request_interview_web/widgets/datetime_range_form.dart';
 import 'package:miel_work_request_interview_web/widgets/dotted_divider.dart';
 import 'package:miel_work_request_interview_web/widgets/form_label.dart';
+import 'package:miel_work_request_interview_web/widgets/link_text.dart';
 import 'package:miel_work_request_interview_web/widgets/responsive_box.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
@@ -119,6 +120,96 @@ class _Step1ScreenState extends State<Step1Screen> {
               ResponsiveBox(
                 children: [
                   const Text('以下のフォームにご入力いただき、申込を行なってください。'),
+                  const Text('取材に際してご要望がございましたら、「その他連絡事項」にご記入ください。'),
+                  const SizedBox(height: 16),
+                  const Text(
+                      '取材の日程が確定していない場合や、希望日が複数ある場合は、予定日時を「未定」にして、「その他連絡事項」にご入力ください。'),
+                  const Text(
+                    '必ずしもご希望に添えるわけではありませんが、日程の候補を複数ご用意いただきますと、お申し込みが通りやすくなります。',
+                    style: TextStyle(
+                      color: kRedColor,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'SourceHanSansJP-Bold',
+                    ),
+                  ),
+                  const Text(
+                    'ランチタイム・夕方〜夜間、土日祝日や大型連休中は館内の混雑が予想されますので、取材をお断りさせていただく場合がございます。',
+                    style: TextStyle(
+                      color: kRedColor,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'SourceHanSansJP-Bold',
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  const Text(
+                    '取材内容の精査にはお時間がかかりますので、2週間以上の余裕を持ってお申し込みください。',
+                    style: TextStyle(
+                      color: kRedColor,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'SourceHanSansJP-Bold',
+                    ),
+                  ),
+                  const Text(
+                    '弊社担当より、取材の可否又は取材日程の調整について折り返しご連絡をさせていただきます。申込＝取材許可ではございませんのでご注意ください。',
+                    style: TextStyle(
+                      color: kRedColor,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'SourceHanSansJP-Bold',
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  const Text(
+                    '取材開始時と取材終了時にそれぞれ必ずひろめ市場インフォメーションにお声がけください。',
+                    style: TextStyle(
+                      color: kRedColor,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'SourceHanSansJP-Bold',
+                    ),
+                  ),
+                  const Text(
+                    '周囲のお客様や店舗のスタッフへ事前に撮影についての説明を行い、ご迷惑にならないよう十分ご配慮ください。',
+                    style: TextStyle(
+                      color: kRedColor,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'SourceHanSansJP-Bold',
+                    ),
+                  ),
+                  const Text(
+                    '館内の通路は非常に狭くなっております。渋滞や混雑が発生しないようにご注意ください。',
+                    style: TextStyle(
+                      color: kRedColor,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'SourceHanSansJP-Bold',
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+                  const Text(
+                    '婚礼の前撮りをご希望の方は以下をリンクをクリックすると、婚礼の前撮り用の入力例が自動で入ります。入力例を参考に入力してください。',
+                    style: TextStyle(
+                      color: kRedColor,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'SourceHanSansJP-Bold',
+                    ),
+                  ),
+                  LinkText(
+                    label: '婚礼の前撮り用の入力例を反映させる',
+                    color: kBlueColor,
+                    onTap: () {
+                      companyName.text = 'ひろめブライダル';
+                      companyUserName.text = '田中太郎';
+                      companyUserEmail.text = 'bridal@hirome.co.jp';
+                      companyUserTel.text = '090-0000-0000';
+                      mediaName.text = '前撮り';
+                      interviewedUserName.text = '田中太郎';
+                      interviewedUserTel.text = '090-0000-0000';
+                      interviewedReserved = true;
+                      interviewedVisitors.text =
+                          '新郎・新婦の2名、カメラマン1名、アシスタント1名、美容師1名';
+                      interviewedContent.text =
+                          '新郎新婦がひろめ市場の席でカツオのたたきを食べながら乾杯をする様子';
+                      setState(() {});
+                    },
+                  ),
                   const SizedBox(height: 16),
                   const DottedDivider(),
                   const SizedBox(height: 16),
@@ -167,7 +258,8 @@ class _Step1ScreenState extends State<Step1Screen> {
                     '※このメールアドレス宛に、返答させていただきます',
                     style: TextStyle(
                       color: kRedColor,
-                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'SourceHanSansJP-Bold',
                     ),
                   ),
                   const SizedBox(height: 8),
@@ -312,6 +404,22 @@ class _Step1ScreenState extends State<Step1Screen> {
                       borderView: true,
                     ),
                   ),
+                  const Text(
+                    '※お席は1テーブル8名様掛けです。',
+                    style: TextStyle(
+                      color: kRedColor,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'SourceHanSansJP-Bold',
+                    ),
+                  ),
+                  const Text(
+                    '※基本的に場所の指定はできませんが、特別なご要望がございましたら「その他連絡事項」にご入力ください。',
+                    style: TextStyle(
+                      color: kRedColor,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'SourceHanSansJP-Bold',
+                    ),
+                  ),
                   const SizedBox(height: 8),
                   FormLabel(
                     '取材店舗',
@@ -320,6 +428,30 @@ class _Step1ScreenState extends State<Step1Screen> {
                       textInputType: TextInputType.text,
                       maxLines: 1,
                       hintText: '例）明神丸、黒潮物産',
+                    ),
+                  ),
+                  const Text(
+                    '※弊社より各店舗への撮影許可をお取りすることはできません。取材予定のすべての店舗へ、必ず事前に取材許可をお取りください。',
+                    style: TextStyle(
+                      color: kRedColor,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'SourceHanSansJP-Bold',
+                    ),
+                  ),
+                  const Text(
+                    '※各店舗の連絡先は、ひろめ市場ホームページ内に掲載しております。',
+                    style: TextStyle(
+                      color: kRedColor,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'SourceHanSansJP-Bold',
+                    ),
+                  ),
+                  const Text(
+                    '※弊社を通してお食事やお飲み物のご予約・ご注文はできかねますので、ご了承ください。',
+                    style: TextStyle(
+                      color: kRedColor,
+                      fontWeight: FontWeight.bold,
+                      fontFamily: 'SourceHanSansJP-Bold',
                     ),
                   ),
                   const SizedBox(height: 8),
