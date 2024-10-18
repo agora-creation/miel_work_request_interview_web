@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:miel_work_request_interview_web/common/custom_date_time_picker.dart';
 import 'package:miel_work_request_interview_web/common/functions.dart';
 import 'package:miel_work_request_interview_web/common/style.dart';
+import 'package:miel_work_request_interview_web/models/request_interview.dart';
 import 'package:miel_work_request_interview_web/providers/request_interview.dart';
 import 'package:miel_work_request_interview_web/screens/step2.dart';
+import 'package:miel_work_request_interview_web/services/request_interview.dart';
 import 'package:miel_work_request_interview_web/widgets/attached_file_list.dart';
 import 'package:miel_work_request_interview_web/widgets/custom_alert_dialog.dart';
 import 'package:miel_work_request_interview_web/widgets/custom_button.dart';
@@ -27,6 +29,7 @@ class Step1Screen extends StatefulWidget {
 }
 
 class _Step1ScreenState extends State<Step1Screen> {
+  RequestInterviewService interviewService = RequestInterviewService();
   TextEditingController companyName = TextEditingController();
   TextEditingController companyUserName = TextEditingController();
   TextEditingController companyUserEmail = TextEditingController();
@@ -75,6 +78,51 @@ class _Step1ScreenState extends State<Step1Screen> {
     );
   }
 
+  void _getPrm() async {
+    String? id = Uri.base.queryParameters['id'];
+    if (id == null) return;
+    RequestInterviewModel? interview = await interviewService.selectData(id);
+    if (interview == null) return;
+    companyName.text = interview.companyName;
+    companyUserName.text = interview.companyUserName;
+    companyUserEmail.text = interview.companyUserEmail;
+    companyUserTel.text = interview.companyUserTel;
+    mediaName.text = interview.mediaName;
+    programName.text = interview.programName;
+    castInfo.text = interview.castInfo;
+    featureContent.text = interview.featureContent;
+    publishedAt.text = interview.publishedAt;
+    interviewedStartedAt = interview.interviewedStartedAt;
+    interviewedEndedAt = interview.interviewedEndedAt;
+    interviewedAtPending = interview.interviewedAtPending;
+    interviewedUserName.text = interview.interviewedUserName;
+    interviewedUserTel.text = interview.interviewedUserTel;
+    interviewedReserved = interview.interviewedReserved;
+    interviewedShopName.text = interview.interviewedShopName;
+    interviewedVisitors.text = interview.interviewedVisitors;
+    interviewedContent.text = interview.interviewedContent;
+    location = interview.location;
+    locationStartedAt = interview.locationStartedAt;
+    locationEndedAt = interview.locationEndedAt;
+    locationAtPending = interview.locationAtPending;
+    locationUserName.text = interview.locationUserName;
+    locationUserTel.text = interview.locationUserTel;
+    locationVisitors.text = interview.locationVisitors;
+    locationContent.text = interview.locationContent;
+    insert = interview.insert;
+    insertedStartedAt = interview.insertedStartedAt;
+    insertedEndedAt = interview.insertedEndedAt;
+    insertedAtPending = interview.insertedAtPending;
+    insertedUserName.text = interview.insertedUserName;
+    insertedUserTel.text = interview.insertedUserTel;
+    insertedReserved = interview.insertedReserved;
+    insertedShopName.text = interview.insertedShopName;
+    insertedVisitors.text = interview.insertedVisitors;
+    insertedContent.text = interview.insertedContent;
+    remarks.text = interview.remarks;
+    setState(() {});
+  }
+
   @override
   void initState() {
     _showCaution();
@@ -111,6 +159,7 @@ class _Step1ScreenState extends State<Step1Screen> {
     insertedEndedAt = insertedStartedAt.add(
       const Duration(hours: 2),
     );
+    _getPrm();
     super.initState();
   }
 
