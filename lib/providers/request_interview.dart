@@ -140,28 +140,27 @@ class RequestInterviewProvider with ChangeNotifier {
           'approvalUsers': [],
           'createdAt': DateTime.now(),
         });
-      });
-      String interviewedAtText = '';
-      if (interviewedAtPending) {
-        interviewedAtText = '未定';
-      } else {
-        interviewedAtText =
-            '${dateText('yyyy/MM/dd HH:mm', interviewedStartedAt)}〜${dateText('yyyy/MM/dd HH:mm', interviewedEndedAt)}';
-      }
-      String interviewedReservedText = '';
-      if (interviewedReserved) {
-        interviewedReservedText = '必要';
-      }
-      String locationText = '';
-      if (location) {
-        String locationAtText = '';
-        if (locationAtPending) {
-          locationAtText = '未定';
+        String interviewedAtText = '';
+        if (interviewedAtPending) {
+          interviewedAtText = '未定';
         } else {
-          locationAtText =
-              '${dateText('yyyy/MM/dd HH:mm', locationStartedAt)}〜${dateText('yyyy/MM/dd HH:mm', locationEndedAt)}';
+          interviewedAtText =
+              '${dateText('yyyy/MM/dd HH:mm', interviewedStartedAt)}〜${dateText('yyyy/MM/dd HH:mm', interviewedEndedAt)}';
         }
-        locationText = '''
+        String interviewedReservedText = '';
+        if (interviewedReserved) {
+          interviewedReservedText = '必要';
+        }
+        String locationText = '';
+        if (location) {
+          String locationAtText = '';
+          if (locationAtPending) {
+            locationAtText = '未定';
+          } else {
+            locationAtText =
+                '${dateText('yyyy/MM/dd HH:mm', locationStartedAt)}〜${dateText('yyyy/MM/dd HH:mm', locationEndedAt)}';
+          }
+          locationText = '''
 ■ロケハン情報
 【ロケハン予定日時】$locationAtText
 【ロケハン担当者名】$locationUserName
@@ -171,21 +170,21 @@ class RequestInterviewProvider with ChangeNotifier {
 $locationContent
 
         ''';
-      }
-      String insertText = '';
-      if (insert) {
-        String insertedAt = '';
-        if (insertedAtPending) {
-          insertedAt = '未定';
-        } else {
-          insertedAt =
-              '${dateText('yyyy/MM/dd HH:mm', insertedStartedAt)}〜${dateText('yyyy/MM/dd HH:mm', insertedEndedAt)}';
         }
-        String insertedReservedText = '';
-        if (insertedReserved) {
-          insertedReservedText = '必要';
-        }
-        insertText = '''
+        String insertText = '';
+        if (insert) {
+          String insertedAt = '';
+          if (insertedAtPending) {
+            insertedAt = '未定';
+          } else {
+            insertedAt =
+                '${dateText('yyyy/MM/dd HH:mm', insertedStartedAt)}〜${dateText('yyyy/MM/dd HH:mm', insertedEndedAt)}';
+          }
+          String insertedReservedText = '';
+          if (insertedReserved) {
+            insertedReservedText = '必要';
+          }
+          insertText = '''
 ■インサート撮影情報
 【撮影予定日時】$insertedAt
 【撮影担当者名】$insertedUserName
@@ -197,8 +196,14 @@ $locationContent
 $insertedContent
 
         ''';
-      }
-      String message = '''
+        }
+        String attachedFilesText = '';
+        if (attachedFiles.isNotEmpty) {
+          for (final file in attachedFiles) {
+            attachedFilesText += '$file\n';
+          }
+        }
+        String message = '''
 ★★★このメールは自動返信メールです★★★
 
 取材申込が完了いたしました。
@@ -231,18 +236,21 @@ $interviewedContent
 
 $locationText
 $insertText
+【添付ファイル】
+$attachedFilesText
 【その他連絡事項】
 $remarks
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
       ''';
-      _mailService.create({
-        'id': _mailService.id(),
-        'to': companyUserEmail,
-        'subject': '【自動送信】取材申込完了のお知らせ',
-        'message': message,
-        'createdAt': DateTime.now(),
-        'expirationAt': DateTime.now().add(const Duration(hours: 1)),
+        _mailService.create({
+          'id': _mailService.id(),
+          'to': companyUserEmail,
+          'subject': '【自動送信】取材申込完了のお知らせ',
+          'message': message,
+          'createdAt': DateTime.now(),
+          'expirationAt': DateTime.now().add(const Duration(hours: 1)),
+        });
       });
       //通知
       List<UserModel> sendUsers = [];
