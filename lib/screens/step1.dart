@@ -469,14 +469,6 @@ class _Step1ScreenState extends State<Step1Screen> {
                     ),
                   ),
                   const Text(
-                    '※お席は1テーブル8名様掛けです。',
-                    style: TextStyle(
-                      color: kRedColor,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'SourceHanSansJP-Bold',
-                    ),
-                  ),
-                  const Text(
                     '※基本的に場所の指定はできませんが、特別なご要望がございましたら「その他連絡事項」にご入力ください。',
                     style: TextStyle(
                       color: kRedColor,
