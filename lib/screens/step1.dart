@@ -901,83 +901,85 @@ class CautionDialog extends StatelessWidget {
     return CustomAlertDialog(
       content: const SizedBox(
         width: 600,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 8),
-            Text(
-              '取材に関しての注意事項',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'SourceHanSansJP-Bold',
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 8),
+              Text(
+                '取材に関しての注意事項',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'SourceHanSansJP-Bold',
+                ),
               ),
-            ),
-            SizedBox(height: 8),
-            Text('取材に際してご要望がございましたら、「その他連絡事項」にご記入ください。'),
-            SizedBox(height: 16),
-            Text(
-                '取材の日程が確定していない場合や、希望日が複数ある場合は、予定日時を「未定」にして、「その他連絡事項」にご入力ください。'),
-            Text(
-              '必ずしもご希望に添えるわけではありませんが、日程の候補を複数ご用意いただきますと、お申し込みが通りやすくなります。',
-              style: TextStyle(
-                color: kRedColor,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'SourceHanSansJP-Bold',
+              SizedBox(height: 8),
+              Text('取材に際してご要望がございましたら、「その他連絡事項」にご記入ください。'),
+              SizedBox(height: 16),
+              Text(
+                  '取材の日程が確定していない場合や、希望日が複数ある場合は、予定日時を「未定」にして、「その他連絡事項」にご入力ください。'),
+              Text(
+                '必ずしもご希望に添えるわけではありませんが、日程の候補を複数ご用意いただきますと、お申し込みが通りやすくなります。',
+                style: TextStyle(
+                  color: kRedColor,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'SourceHanSansJP-Bold',
+                ),
               ),
-            ),
-            Text(
-              'ランチタイム・夕方〜夜間、土日祝日や大型連休中は館内の混雑が予想されますので、取材をお断りさせていただく場合がございます。',
-              style: TextStyle(
-                color: kRedColor,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'SourceHanSansJP-Bold',
+              Text(
+                'ランチタイム・夕方〜夜間、土日祝日や大型連休中は館内の混雑が予想されますので、取材をお断りさせていただく場合がございます。',
+                style: TextStyle(
+                  color: kRedColor,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'SourceHanSansJP-Bold',
+                ),
               ),
-            ),
-            SizedBox(height: 16),
-            Text(
-              '取材内容の精査にはお時間がかかりますので、2週間以上の余裕を持ってお申し込みください。',
-              style: TextStyle(
-                color: kRedColor,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'SourceHanSansJP-Bold',
+              SizedBox(height: 16),
+              Text(
+                '取材内容の精査にはお時間がかかりますので、2週間以上の余裕を持ってお申し込みください。',
+                style: TextStyle(
+                  color: kRedColor,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'SourceHanSansJP-Bold',
+                ),
               ),
-            ),
-            Text(
-              '弊社担当より、取材の可否又は取材日程の調整について折り返しご連絡をさせていただきます。申込＝取材許可ではございませんのでご注意ください。',
-              style: TextStyle(
-                color: kRedColor,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'SourceHanSansJP-Bold',
+              Text(
+                '弊社担当より、取材の可否又は取材日程の調整について折り返しご連絡をさせていただきます。申込＝取材許可ではございませんのでご注意ください。',
+                style: TextStyle(
+                  color: kRedColor,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'SourceHanSansJP-Bold',
+                ),
               ),
-            ),
-            SizedBox(height: 16),
-            Text(
-              '取材開始時と取材終了時にそれぞれ必ずひろめ市場インフォメーションにお声がけください。',
-              style: TextStyle(
-                color: kRedColor,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'SourceHanSansJP-Bold',
+              SizedBox(height: 16),
+              Text(
+                '取材開始時と取材終了時にそれぞれ必ずひろめ市場インフォメーションにお声がけください。',
+                style: TextStyle(
+                  color: kRedColor,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'SourceHanSansJP-Bold',
+                ),
               ),
-            ),
-            Text(
-              '周囲のお客様や店舗のスタッフへ事前に撮影についての説明を行い、ご迷惑にならないよう十分ご配慮ください。',
-              style: TextStyle(
-                color: kRedColor,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'SourceHanSansJP-Bold',
+              Text(
+                '周囲のお客様や店舗のスタッフへ事前に撮影についての説明を行い、ご迷惑にならないよう十分ご配慮ください。',
+                style: TextStyle(
+                  color: kRedColor,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'SourceHanSansJP-Bold',
+                ),
               ),
-            ),
-            Text(
-              '館内の通路は非常に狭くなっております。渋滞や混雑が発生しないようにご注意ください。',
-              style: TextStyle(
-                color: kRedColor,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'SourceHanSansJP-Bold',
+              Text(
+                '館内の通路は非常に狭くなっております。渋滞や混雑が発生しないようにご注意ください。',
+                style: TextStyle(
+                  color: kRedColor,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'SourceHanSansJP-Bold',
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       actionsAlignment: MainAxisAlignment.center,
